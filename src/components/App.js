@@ -1,9 +1,10 @@
 import React from 'react';
+import ConnectButton from './ConnectButton';
 
 function App() {
     return (
         <div className="App">
-            Edit <code>src/App.js</code> and save to reload.
+            <ConnectButton />
         </div>
     );
 }
