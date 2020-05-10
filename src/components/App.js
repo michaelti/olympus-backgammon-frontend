@@ -1,10 +1,10 @@
 import React from 'react';
-import ConnectButton from './ConnectButton';
+import SocketDemo from './SocketDemo';
 
 function App() {
     return (
         <div className="App">
-            <ConnectButton />
+            <SocketDemo />
         </div>
     );
 }
