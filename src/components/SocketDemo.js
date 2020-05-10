@@ -13,7 +13,7 @@ function SocketDemo() {
         });
 
         socket.on('message', (data) => {
-            setMessages((m) => [...m, data].slice(-5));
+            setMessages((m) => [...m, data]);
         });
     }, [socket]);
 
