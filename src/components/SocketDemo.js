@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import useSocket from '../hooks/useSocket';
 
-function SocketDemo() {    
+function SocketDemo(props) {    
     const [messages, setMessages] = useState([]);
     const [latency, setLatency] = useState(null);
 
-    const [socket, isConnected, isConnecting] = useSocket('http://localhost:3001');
+    const [socket, isConnected, isConnecting] = useSocket(props.socketUrl);
     
     useEffect(() => {
         socket.on('pong', (latency) => {
@@ -18,7 +18,8 @@ function SocketDemo() {
     }, [socket]);
 
     return (
-        <div>
+        <div style={{float: 'left', marginRight: '50px'}}>
+            <h1>{ props.title }</h1>
             status: {
                 isConnecting ? 'Connecting' :
                 isConnected ? 'Connected' :
@@ -36,6 +37,19 @@ function SocketDemo() {
                     </div>
                 ))
             }
+            <br />
+
+            { props.title === '/Chat' ? (
+                <>
+                    <button onClick={()=>{socket.emit('join-room', 'example-room');}}>
+                        join room "example-room"
+                    </button>
+                    <button onClick={()=>{socket.emit('leave-room', 'example-room');}}>
+                        leave room "example-room"
+                    </button>
+                </>
+            ) : null }
+
         </div>
     );
 }
