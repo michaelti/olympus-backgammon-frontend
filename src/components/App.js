@@ -4,9 +4,7 @@ import SocketDemo from './SocketDemo';
 function App() {
     return (
         <div className="App">
-            <SocketDemo title="Default" socketUrl="ws://localhost:3001/" />
-            <SocketDemo title="/Game" socketUrl="ws://localhost:3001/game" />
-            <SocketDemo title="/Chat" socketUrl="ws://localhost:3001/chat" />
+            <SocketDemo socketUrl="ws://localhost:3001" />
         </div>
     );
 }

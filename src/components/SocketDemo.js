@@ -1,54 +1,57 @@
 import React, {useState, useEffect} from 'react';
 import useSocket from '../hooks/useSocket';
 
-function SocketDemo(props) {    
-    const [messages, setMessages] = useState([]);
-    const [latency, setLatency] = useState(null);
+function SocketDemo(props) {  
+    const [roomName, setRoomName] = useState('');  
+    const [joinName, setJoinName] = useState('');  
 
     const [socket, isConnected, isConnecting] = useSocket(props.socketUrl);
     
     useEffect(() => {
-        socket.on('pong', (latency) => {
-            setLatency(latency);
+        // Receive successful joined room
+        socket.on('event/joined-room', (roomName) => {
+            setRoomName(roomName);
         });
 
-        socket.on('message', (data) => {
-            setMessages((m) => [...m, data]);
+        // Receive failed join room
+        socket.on('event/failed-join-room', (roomName) => {
+            console.log('Failed to join room because it does not exist.');
         });
     }, [socket]);
 
+    const startRoom = () => {
+        socket.emit('event/start-room');
+    };
+
+    const joinRoom = () => {
+        socket.emit('event/join-room', joinName);
+    };
+
+    const handleChange = (event) => {
+        setJoinName(event.target.value);
+    };
+
     return (
-        <div style={{float: 'left', marginRight: '50px'}}>
-            <h1>{ props.title }</h1>
+        <div>
             status: {
                 isConnecting ? 'Connecting' :
                 isConnected ? 'Connected' :
                 'Disconnected'
             }
+
             <br />
 
-            latency: { latency } ms
+            room name: { roomName }
+
             <br />
 
-            messages: {
-                messages.map((message, i) => (
-                    <div key={i}>
-                        { message }
-                    </div>
-                ))
-            }
-            <br />
-
-            { props.title === '/Chat' ? (
-                <>
-                    <button onClick={()=>{socket.emit('join-room', 'example-room');}}>
-                        join room "example-room"
-                    </button>
-                    <button onClick={()=>{socket.emit('leave-room', 'example-room');}}>
-                        leave room "example-room"
-                    </button>
-                </>
-            ) : null }
+            <button onClick={startRoom}>
+                Start
+            </button>
+            <button onClick={joinRoom}>
+                Join
+            </button>
+            <input type="text" placeholder="Room name to join" onChange={handleChange} />
 
         </div>
     );
