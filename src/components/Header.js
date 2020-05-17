@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function SocketDemo(props) {  
+function Header(props) {  
     const [roomName, setRoomName] = useState('');
     const { socket, isConnected, isConnecting } = props;
     
@@ -29,4 +29,4 @@ function SocketDemo(props) {
     );
 }
 
-export default SocketDemo;
+export default Header;

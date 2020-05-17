@@ -1,6 +1,6 @@
 import React from 'react';
 import SocketActions from './SocketActions';
-import SocketStatus from './SocketStatus';
+import Header from './Header';
 import useSocket from '../hooks/useSocket';
 
 function App() {
@@ -8,12 +8,12 @@ function App() {
 
     return (
         <div className="App">
-            <SocketActions socket={socket} />
-            <SocketStatus
+            <Header
                 socket={socket}
                 isConnecting={isConnecting}
                 isConnected={isConnected}
             />
+            <SocketActions socket={socket} />
         </div>
     );
 }
