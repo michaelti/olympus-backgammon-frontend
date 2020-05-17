@@ -1,0 +1,10 @@
+/* Global styles */
+
+/** Reset box sizing **/
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+
+/** Height convenience for app parents **/
+html, body, #root, .App {
+    height: 100%;
+}
