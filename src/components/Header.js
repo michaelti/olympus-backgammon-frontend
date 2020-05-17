@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const Navbar = styled.div`
+const HeaderContainer = styled.header`
     display: flex;
     background-color: #0074e8;
     color: #ffffff;
@@ -29,7 +29,7 @@ function Header(props) {
     }, [socket]);
 
     return (
-        <Navbar>
+        <HeaderContainer>
             <div>
                 Status: {
                     isConnecting ? 'Connecting' :
@@ -40,7 +40,7 @@ function Header(props) {
             <div>
                 Room name: { roomName }
             </div>
-        </Navbar>
+        </HeaderContainer>
     );
 }
 
