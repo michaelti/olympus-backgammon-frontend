@@ -1,4 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+const Navbar = styled.div`
+    display: flex;
+    background-color: #0074e8;
+    color: #ffffff;
+    padding: 15px;
+    
+    > div {
+        margin-right: 15px;
+    }
+`;
 
 function Header(props) {  
     const [roomName, setRoomName] = useState('');
@@ -17,15 +29,18 @@ function Header(props) {
     }, [socket]);
 
     return (
-        <div>
-            Status: {
-                isConnecting ? 'Connecting' :
-                isConnected ? 'Connected' :
-                'Disconnected'
-            }
-            <br />
-            Room name: { roomName }
-        </div>
+        <Navbar>
+            <div>
+                Status: {
+                    isConnecting ? 'Connecting' :
+                    isConnected ? 'Connected' :
+                    'Disconnected'
+                }
+            </div>
+            <div>
+                Room name: { roomName }
+            </div>
+        </Navbar>
     );
 }
 
