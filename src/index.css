@@ -22,3 +22,9 @@ body {
         "Helvetica Neue",
         sans-serif;
 }
+
+/** General colours **/
+body {
+    background-color: #43464E;
+    color: #fff;
+}

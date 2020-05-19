@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 const HeaderContainer = styled.header`
     display: flex;
-    background-color: #0074e8;
-    color: #ffffff;
+    background-color: #32353D;
     padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     
     > div {
         margin-right: 15px;
@@ -30,6 +30,9 @@ function Header(props) {
 
     return (
         <HeaderContainer>
+            <div>
+                Olympus Backgammon
+            </div>
             <div>
                 Status: {
                     isConnecting ? 'Connecting' :
