@@ -1,25 +1,22 @@
 import React from 'react';
-import SocketActions from './SocketActions';
 import Header from './Header';
+import Main from './Main';
 import useSocket from '../hooks/useSocket';
-import styled from 'styled-components';
-
-const AppContainer = styled.div`
-
-`;
+import GlobalStyles from '../styles/globalStyles';
 
 function App() {
     const [socket, isConnected, isConnecting] = useSocket("ws://localhost:3001");
 
     return (
-        <AppContainer className="App">
+        <div className="App">
+            <GlobalStyles />
             <Header
                 socket={socket}
                 isConnecting={isConnecting}
                 isConnected={isConnected}
             />
-            <SocketActions socket={socket} />
-        </AppContainer>
+            <Main socket={socket} />
+        </div>
     );
 }
 

@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import {
+    Container,
+    Navbar,
+    NavbarBrand,
+    Nav,
+    NavbarText
+} from 'reactstrap';
 
-const HeaderContainer = styled.header`
-    display: flex;
-    background-color: #32353D;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    
-    > div {
-        margin-right: 15px;
-    }
-`;
-
-function Header(props) {  
+function Header({ socket, isConnected, isConnecting }) {  
     const [roomName, setRoomName] = useState('');
-    const { socket, isConnected, isConnecting } = props;
     
     useEffect(() => {
         // Receive successful joined room
@@ -24,26 +18,30 @@ function Header(props) {
 
         // Receive failed join room
         socket.on('event/failed-join-room', (roomName) => {
-            console.log(`Failed to join room ${roomName} because it does not exist.`);
+            console.log(`Failed to join room "${roomName}" because it does not exist.`);
         });
     }, [socket]);
 
     return (
-        <HeaderContainer>
-            <div>
-                Olympus Backgammon
-            </div>
-            <div>
-                Status: {
-                    isConnecting ? 'Connecting' :
-                    isConnected ? 'Connected' :
-                    'Disconnected'
-                }
-            </div>
-            <div>
-                Room name: { roomName }
-            </div>
-        </HeaderContainer>
+        <header>
+            <Navbar color="light" light expand="xs">
+                <Container className="px-sm-3">
+                    <NavbarBrand>Olympus Backgammon</NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavbarText className="mr-3">
+                            Status: {
+                                isConnecting ? 'Connecting' :
+                                isConnected ? 'Connected' :
+                                'Disconnected'
+                            }
+                        </NavbarText>
+                        <NavbarText>
+                            Room name: { roomName }
+                        </NavbarText>
+                    </Nav>
+                </Container>
+            </Navbar>
+        </header>
     );
 }
 
