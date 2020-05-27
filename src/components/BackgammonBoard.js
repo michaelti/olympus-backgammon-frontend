@@ -13,7 +13,11 @@ const Pip = ({ oddEven="odd", ...props }) => {
         </svg>
     );
 
-    return oddEven === 'odd' ? odd : oddEven === 'even' ? even : null;
+    return (
+        oddEven === 'odd' ? odd :
+        oddEven === 'even' ? even :
+        null
+    );
 };
 
 function BackgammonBoard() {
