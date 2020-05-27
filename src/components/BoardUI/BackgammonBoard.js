@@ -51,6 +51,8 @@ function BackgammonBoard() {
                     <use width="100" height="600" href="#pip" x="1300" transform="rotate(180, 750, 600)" />
                 </g>
             </g>
+
+            <Checker onClick={()=>{console.log('test')}} posX="1" posY="11" />
         </svg>
     );
 }
