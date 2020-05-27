@@ -1,4 +1,5 @@
 import React from 'react';
+import Checker from './Checker';
 
 function BackgammonBoard() {
     return (
