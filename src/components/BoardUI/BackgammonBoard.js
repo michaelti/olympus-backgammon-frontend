@@ -39,7 +39,7 @@ function BackgammonBoard() {
     });
 
     return (
-        <svg width="500" height="400" viewBox="0 0 1500 1200" xmlns="http://www.w3.org/2000/svg">
+        <svg width="500" height="400" viewBox="0 0 1500 1200">
             <rect className="background" width="1500" height="1200" fill="#402d26" />
 
             <Bar
