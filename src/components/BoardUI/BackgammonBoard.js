@@ -41,32 +41,14 @@ function BackgammonBoard() {
     return (
         <svg width="500" height="400" viewBox="0 0 1500 1200">
             <rect className="background" width="1500" height="1200" fill="#402d26" />
-
-            <Bar
-                posX={700}
-                invert
-                count={boardState.barWhite}
-                color="white"
-            />
-            <Bar
-                posX={700}
-                count={boardState.barBlack}
-                color="black"
-            />
             
-            <Off
-                posX={1400}
-                invert
-                count={boardState.offWhite}
-                color="white"
-            />
+            <Off posX={1400} invert count={boardState.offWhite} color="white" />
             <Off posX={0} invert />
             <Off posX={0} />
-            <Off
-                posX={1400}
-                count={boardState.offBlack}
-                color="black" 
-            />
+            <Off posX={1400} count={boardState.offBlack} color="black" />
+
+            <Bar posX={700} invert count={boardState.barWhite} color="white" />
+            <Bar posX={700} count={boardState.barBlack} color="black" />
 
             {boardState.pips.slice(1,7).map((pip, i) => (
                 <Pip
