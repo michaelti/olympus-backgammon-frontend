@@ -31,8 +31,8 @@ function BackgammonBoard() {
             { size: 0, top: 'white', bot: 'black' },
             { size: 0, top: 'white', bot: 'black' },
         ],
-        offWhite: 0,
-        offBlack: 0,
+        offWhite: 2,
+        offBlack: 1,
         barWhite: 0,
         barBlack: 0,
     });
@@ -43,10 +43,20 @@ function BackgammonBoard() {
 
             <rect className="bar--top" x="700" width="100" height="600" fill="#745138" />
             <rect className="bar--bot" y="600" x="700" width="100" height="600" fill="#745138" />
-            <rect className="off--left-top" width="100" height="600" fill="#745138" />
-            <rect className="off--left-bot" y="600" width="100" height="600" fill="#745138" />
-            <rect className="off--right-top" x="1400" width="100" height="600" fill="#745138" />
-            <rect className="off--right-bot" y="600" x="1400" width="100" height="600" fill="#745138" />
+            
+            <Off
+                posX={1400}
+                invert
+                count={boardState.offWhite}
+                color="white"
+            />
+            <Off posX={0} invert />
+            <Off posX={0} />
+            <Off
+                posX={1400}
+                count={boardState.offBlack}
+                color="black" 
+            />
 
             {boardState.pips.slice(1,7).map((pip, i) => (
                 <Pip
