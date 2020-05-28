@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Pip from './Pip';
+import Off from './Off';
 
 function BackgammonBoard() {
     const [boardState] = useState({
