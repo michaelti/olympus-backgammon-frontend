@@ -1,7 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Checker from './Checker';
+import Pip from './Pip';
 
 function BackgammonBoard() {
+    const [boardState, setBoardState] = useState({
+        pips: [
+            { size: 0, top: '', bot: '' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
+        ],
+        offWhite: 0,
+        offBlack: 0,
+        barWhite: 0,
+        barBlack: 0,
+    });
+
     return (
         <svg width="500" height="400" viewBox="0 0 1500 1200" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -10,14 +45,12 @@ function BackgammonBoard() {
                 </symbol>
             </defs>
 
-            <g class="backgrounds">
+            <g>
                 <rect class="background" width="1500" height="1200" fill="#402d26" />
                 <rect class="off--left" width="100" height="1200" fill="#745138" />
                 <rect class="bar" x="700" width="100" height="1200" fill="#745138" />
                 <rect class="off--right" x="1400"  width="100" height="1200" fill="#745138" />
-            </g>
-
-            <g class="pips">
+            
                 <g class="pips--top-left">
                     <use width="100" height="600" href="#pip" x="100" />
                     <use width="100" height="600" href="#pip" x="200" />
@@ -52,7 +85,9 @@ function BackgammonBoard() {
                 </g>
             </g>
 
-            <Checker onClick={()=>{console.log('test')}} posX="1" posY="11" />
+            <Pip data={boardState.pips[1]} />
+
+            <Checker posX="1" posY="11" />
         </svg>
     );
 }
