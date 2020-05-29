@@ -7,7 +7,7 @@ function BackgammonBoard() {
     const [boardState] = useState({
         pips: [
             { size: 0, top: '', bot: '' },
-            { size: 3, top: 'white', bot: 'black' },
+            { size: 0, top: 'white', bot: 'black' },
             { size: 0, top: 'white', bot: 'black' },
             { size: 0, top: 'white', bot: 'black' },
             { size: 0, top: 'white', bot: 'black' },
@@ -32,8 +32,8 @@ function BackgammonBoard() {
             { size: 0, top: 'white', bot: 'black' },
             { size: 0, top: 'white', bot: 'black' },
         ],
-        offWhite: 2,
-        offBlack: 1,
+        offWhite: 0,
+        offBlack: 0,
         barWhite: 0,
         barBlack: 0,
     });
