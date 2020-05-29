@@ -14,7 +14,7 @@ function Bar({ count, color, posX, invert }) {
                 <Checker
                     key={i}
                     posX={posX}
-                    posY={invert ? (1100 - (i * 100)) : (i * 100)}
+                    posY={invert ? (1100 - (500 - (i * 100))) : (500 - (i * 100))}
                     color={checker} />
             ))}
         </g>
