@@ -34,8 +34,8 @@ function BackgammonBoard() {
         ],
         offWhite: 2,
         offBlack: 1,
-        barWhite: 2,
-        barBlack: 2,
+        barWhite: 0,
+        barBlack: 0,
     });
 
     return (
