@@ -50,47 +50,44 @@ function BackgammonBoard() {
             <Bar posX={700} invert count={boardState.barWhite} color="white" />
             <Bar posX={700} count={boardState.barBlack} color="black" />
 
-            {boardState.pips.slice(1,7).map((pip, i) => (
-                <Pip
-                    key={i}
-                    posX={1300 - (i * 100)}
-                    invert
-                    size={pip.size}
-                    top={pip.top}
-                    bot={pip.bot}
-                />
-            ))}
+            {boardState.pips.map((pip, i) => {
+                if (i === 0) return null;
+                
+                const pipQuadrant = Math.ceil(i / 24 * 4);
+                let [posX, invert] = [0, false];
+                
+                switch (pipQuadrant) {
+                    case (1):
+                        posX = 1400 - (i * 100);
+                        invert = true;
+                        break;
+                    case (2):
+                        posX = 700 - ((i - 6) * 100);
+                        invert = true;
+                        break;
+                    case (3):
+                        posX = ((i - 12) * 100);
+                        break;
+                    case (4):
+                        posX = ((i - 18) * 100) + 700;
+                        break;
+                    default:
+                        break;
+                }
 
-            {boardState.pips.slice(7,13).map((pip, i) => (
-                <Pip
-                    key={i}
-                    posX={600 - (i * 100)}
-                    invert
-                    size={pip.size}
-                    top={pip.top}
-                    bot={pip.bot}
-                />
-            ))}
+                return (
+                    <Pip
+                        key={i}
+                        posX={posX}
+                        invert={invert}
+                        size={pip.size}
+                        top={pip.top}
+                        bot={pip.bot}
+                    />
+                );
+            })}
 
-            {boardState.pips.slice(13,19).map((pip, i) => (
-                <Pip
-                    key={i}
-                    posX={100 + (i * 100)} 
-                    size={pip.size} 
-                    top={pip.top} 
-                    bot={pip.bot} 
-                />
-            ))}
 
-            {boardState.pips.slice(19,25).map((pip, i) => (
-                <Pip
-                    key={i}
-                    posX={800 + (i * 100)} 
-                    size={pip.size} 
-                    top={pip.top} 
-                    bot={pip.bot} 
-                />
-            ))}
         </svg>
     );
 }
