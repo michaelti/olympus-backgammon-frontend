@@ -4,9 +4,10 @@ import Off from './Off';
 import Bar from './Bar';
 
 function BackgammonBoard() {
-    const [boardState] = useState({
+    const [boardState, setBoardState] = useState({
         pips: [
             { size: 0, top: '', bot: '' },
+            { size: 15, top: 'white', bot: 'white' },
             { size: 0, top: 'empty', bot: 'empty' },
             { size: 0, top: 'empty', bot: 'empty' },
             { size: 0, top: 'empty', bot: 'empty' },
@@ -29,14 +30,52 @@ function BackgammonBoard() {
             { size: 0, top: 'empty', bot: 'empty' },
             { size: 0, top: 'empty', bot: 'empty' },
             { size: 0, top: 'empty', bot: 'empty' },
-            { size: 0, top: 'empty', bot: 'empty' },
-            { size: 0, top: 'empty', bot: 'empty' },
+            { size: 15, top: 'black', bot: 'black' },
         ],
         offWhite: 0,
         offBlack: 0,
         barWhite: 0,
         barBlack: 0,
     });
+
+    const [moving, setMoving] = useState(false);
+    const [sourcePip, setSourcePip] = useState(undefined);
+
+    const handleClickPip = (clickedPip) => {
+        if (!moving) {
+            if (boardState.pips[clickedPip].size > 0) {
+                setMoving(true);
+                setSourcePip(clickedPip);
+            }
+        } else {
+            if (sourcePip !== clickedPip) {
+                moveChecker(sourcePip, clickedPip);
+                setSourcePip(undefined);
+                setMoving(false);
+            }
+        }
+    };
+
+    const moveChecker = (source, dest) => {
+        let pips = [ ...boardState.pips ];
+        let sourcePip = { ...pips[source] };
+        let destPip = { ...pips[dest] };
+
+        destPip.size++;
+        destPip.top = sourcePip.top;
+        destPip.bot = destPip.size > 1 ? destPip.bot : sourcePip.top;
+        pips[dest] = destPip;
+        
+        sourcePip.size--;
+        sourcePip.top = sourcePip.size > 1 ? sourcePip.top : sourcePip.bot;
+        sourcePip.bot = sourcePip.size > 0 ? sourcePip.bot : 'empty';
+        pips[source] = sourcePip;
+
+        setBoardState({
+            ...boardState,
+            pips: pips
+        });
+    };
 
     return (
         <svg width="500" height="400" viewBox="0 0 1500 1200">
@@ -83,6 +122,7 @@ function BackgammonBoard() {
                         size={pip.size}
                         top={pip.top}
                         bot={pip.bot}
+                        onClick={() => handleClickPip(i)}
                     />
                 );
             })}

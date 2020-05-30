@@ -1,7 +1,7 @@
 import React from 'react';
 import Checker from './Checker';
 
-function Pip({ size, top, bot, posX, invert }) {
+function Pip({ size, top, bot, posX, invert, onClick }) {
 
     let checkers = Array(size);
 
@@ -14,7 +14,7 @@ function Pip({ size, top, bot, posX, invert }) {
         ((checkers.length - 6) * 100 / (checkers.length - 1)) : 0;
 
     return (
-        <g>
+        <g onClick={onClick}>
             <svg x={posX} y={invert ? '50%' : '0'} width="100" height="600" viewBox="0 0 100 600">
                 <polygon points="50 500 100 0 0 0 50 500" fill="#f7d086" style={{ transformOrigin: '50%', transform: invert ? 'rotate(180deg)' : 'none' }} />
                 <rect height="100%" width="100%" fill="transparent"></rect>
