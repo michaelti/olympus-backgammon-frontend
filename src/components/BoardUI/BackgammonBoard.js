@@ -42,17 +42,15 @@ function BackgammonBoard() {
     const [sourcePip, setSourcePip] = useState(undefined);
 
     const handleClickPip = (clickedPip) => {
-        if (!moving) {
-            if (boardState.pips[clickedPip].size > 0) {
-                setMoving(true);
-                setSourcePip(clickedPip);
-            }
-        } else {
-            if (sourcePip !== clickedPip) {
-                moveChecker(sourcePip, clickedPip);
-                setSourcePip(undefined);
-                setMoving(false);
-            }
+        if (!moving && boardState.pips[clickedPip].size > 0) {
+            // Start a move
+            setMoving(true);
+            setSourcePip(clickedPip);
+        } else if (sourcePip !== clickedPip) {
+            // Complete the started move
+            moveChecker(sourcePip, clickedPip);
+            setSourcePip(undefined);
+            setMoving(false);
         }
     };
 
@@ -61,16 +59,19 @@ function BackgammonBoard() {
         let sourcePip = { ...pips[source] };
         let destPip = { ...pips[dest] };
 
+        // Add checker to the destination pip
         destPip.size++;
         destPip.top = sourcePip.top;
         destPip.bot = destPip.size > 1 ? destPip.bot : sourcePip.top;
         pips[dest] = destPip;
         
+        // Remove checker from the source pip
         sourcePip.size--;
         sourcePip.top = sourcePip.size > 1 ? sourcePip.top : sourcePip.bot;
         sourcePip.bot = sourcePip.size > 0 ? sourcePip.bot : 'empty';
         pips[source] = sourcePip;
 
+        // Update the pips object in boardState with our mutated copy
         setBoardState({
             ...boardState,
             pips: pips
