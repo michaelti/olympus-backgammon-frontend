@@ -20,13 +20,17 @@ function Pip({ size, top, bot, posX, invertY, onClick }) {
                 <rect height="100%" width="100%" fill="transparent"></rect>
             </svg>
 
-            {checkers.map((checker, i) => (
-                <Checker
-                    key={i}
-                    posX={posX}
-                    posY={invertY ? (1100 - (i * (100 - squishAmount))) : (i * (100 - squishAmount ))}
-                    color={checker} />
-            ))}
+            {checkers.map((checker, i) => {
+                const posY = i * (100 - squishAmount);
+                return (
+                    <Checker
+                        key={i}
+                        posX={posX}
+                        posY={invertY ? (1100 - posY) : posY}
+                        color={checker}
+                    />
+                );
+            })}
         </g>
     );
 }

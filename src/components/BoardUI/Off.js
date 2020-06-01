@@ -13,13 +13,17 @@ function Off({ count, color, posX, invertY }) {
                 <rect width="100" height="600" fill="#745138" />
             </svg>
 
-            {checkers.map((checker, i) => (
-                <Checker
-                    key={i}
-                    posX={posX}
-                    posY={invertY ? (1100 - (i * (100 - squishAmount))) : (i * (100 - squishAmount ))}
-                    color={checker} />
-            ))}
+            {checkers.map((checker, i) => {
+                const posY = i * (100 - squishAmount);
+                return (
+                    <Checker
+                        key={i}
+                        posX={posX}
+                        posY={invertY ? (1100 - posY) : posY}
+                        color={checker}
+                    />
+                );
+            })}
         </g>
     );
 }
