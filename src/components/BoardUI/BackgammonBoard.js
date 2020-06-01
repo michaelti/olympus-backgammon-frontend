@@ -8,7 +8,7 @@ function BackgammonBoard() {
     const [boardState, handleClickPip] = usePlakoto();
 
     return (
-        <svg width="500" height="400" viewBox="0 0 1500 1200">
+        <svg viewBox="0 0 1500 1200" style={{ width: '100%' }}>
             <rect className="background" width="1500" height="1200" fill="#402d26" />
             
             <Off posX={1400} invert count={boardState.offWhite} color="white" />
