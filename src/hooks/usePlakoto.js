@@ -63,17 +63,22 @@ const usePlakoto = () => {
     };
 
     const handleClickPip = (clickedPip) => {
+        const clickedPipObj = boardState.pips[clickedPip];
+        const sourcePipObj = boardState.pips[sourcePip];
+
         if (!moving) {
-            if (boardState.pips[clickedPip].size > 0) {
+            if (clickedPipObj.size > 0) {
                 // Start a move
                 setMoving(true);
                 setSourcePip(clickedPip);
             }
-        } else if (sourcePip !== clickedPip) {
-            // Complete the started move
-            moveChecker(sourcePip, clickedPip);
-            setSourcePip(undefined);
-            setMoving(false);
+        } else if (sourcePip !== clickedPip ) {
+            if (clickedPipObj.size <= 1 || (clickedPipObj.size > 1 && clickedPipObj.top === sourcePipObj.top)) {
+                // Complete the started move
+                moveChecker(sourcePip, clickedPip);
+                setSourcePip(undefined);
+                setMoving(false);
+            }
         }
     };
     
