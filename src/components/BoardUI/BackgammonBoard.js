@@ -11,28 +11,29 @@ function BackgammonBoard() {
         <svg viewBox="0 0 1500 1200" style={{ width: '100%' }}>
             <rect className="background" width="1500" height="1200" fill="#402d26" />
             
-            <Off posX={1400} invert count={boardState.offWhite} color="white" />
-            <Off posX={0} invert />
+            <Off posX={1400} invertY count={boardState.offWhite} color="white" />
+            <Off posX={0} invertY />
+
             <Off posX={0} />
             <Off posX={1400} count={boardState.offBlack} color="black" />
 
-            <Bar posX={700} invert count={boardState.barWhite} color="white" />
+            <Bar posX={700} invertY count={boardState.barWhite} color="white" />
             <Bar posX={700} count={boardState.barBlack} color="black" />
 
             {boardState.pips.map((pip, i) => {
                 if (i === 0) return null;
                 
                 const pipQuadrant = Math.ceil(i / 24 * 4);
-                let [posX, invert] = [0, false];
+                let [posX, invertY] = [0, false];
                 
                 switch (pipQuadrant) {
                     case (1):
                         posX = 1400 - (i * 100);
-                        invert = true;
+                        invertY = true;
                         break;
                     case (2):
                         posX = 700 - ((i - 6) * 100);
-                        invert = true;
+                        invertY = true;
                         break;
                     case (3):
                         posX = ((i - 12) * 100);
@@ -48,7 +49,7 @@ function BackgammonBoard() {
                     <Pip
                         key={i}
                         posX={posX}
-                        invert={invert}
+                        invertY={invertY}
                         size={pip.size}
                         top={pip.top}
                         bot={pip.bot}
