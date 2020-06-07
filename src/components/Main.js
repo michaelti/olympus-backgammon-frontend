@@ -10,7 +10,7 @@ import {
 import BackgammonBoard from './BoardUI/BackgammonBoard';
 import BackgammonExtras from './BoardUI/BackgammonExtras';
 
-function Main({ boardState, startRoom, joinRoom, doSubmove }) {  
+function Main({ boardState, startRoom, joinRoom, doSubmove, applyTurn, undoTurn }) {  
     const [joinName, setJoinName] = useState('');
 
     const handleChange = (event) => {
@@ -60,6 +60,8 @@ function Main({ boardState, startRoom, joinRoom, doSubmove }) {
                     <>
                         <BackgammonExtras
                             boardState={boardState}
+                            applyTurn={applyTurn}
+                            undoTurn={undoTurn}
                         />
                         <BackgammonBoard
                             boardState={boardState}

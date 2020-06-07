@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 
-function BackgammonExtras({ boardState }) {
+function BackgammonExtras({ boardState, applyTurn, undoTurn }) {
     return (
         <ListGroup horizontal="lg">
             <ListGroupItem>
@@ -11,12 +11,12 @@ function BackgammonExtras({ boardState }) {
                 Dice: { JSON.stringify(boardState.dice) }
             </ListGroupItem>
             <ListGroupItem>
-                <Button onClick={()=>{}} color="success">
+                <Button onClick={applyTurn} color="success">
                     Submit turn
                 </Button>
             </ListGroupItem>
             <ListGroupItem>
-                <Button onClick={()=>{}}>
+                <Button onClick={undoTurn}>
                     Undo
                 </Button>
             </ListGroupItem>
