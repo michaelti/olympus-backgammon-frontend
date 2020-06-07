@@ -9,16 +9,8 @@ import {
 } from 'reactstrap';
 import BackgammonBoard from './BoardUI/BackgammonBoard';
 
-function Main({ socket }) {  
+function Main({ boardState, startRoom, joinRoom, doSubmove }) {  
     const [joinName, setJoinName] = useState('');
-
-    const startRoom = () => {
-        socket.emit('event/start-room');
-    };
-
-    const joinRoom = (roomName) => {
-        socket.emit('event/join-room', roomName);
-    };
 
     const handleChange = (event) => {
         setJoinName(event.target.value);
@@ -61,7 +53,15 @@ function Main({ socket }) {
 
                 <br className="my-3" />
 
-                <BackgammonBoard />
+                
+
+                { boardState === null ? null :
+                    <>
+                        dice: { boardState.dice }, turn: {boardState.turn.name}
+                        <BackgammonBoard boardState={boardState} doSubmove={doSubmove} />
+                    </>
+                }
+                
             </Container>
         </main>
     );
