@@ -50,7 +50,6 @@ function SocketManager() {
                 isConnected={isConnected}
             />
             <Main
-                socket={socket}
                 boardState={boardState}
                 startRoom={startRoom}
                 joinRoom={joinRoom}

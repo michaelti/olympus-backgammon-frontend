@@ -11,10 +11,14 @@ function BackgammonExtras({ boardState }) {
                 Dice: { JSON.stringify(boardState.dice) }
             </ListGroupItem>
             <ListGroupItem>
-                <Button color="success">Submit turn</Button>
+                <Button onClick={()=>{}} color="success">
+                    Submit turn
+                </Button>
             </ListGroupItem>
             <ListGroupItem>
-                <Button>Undo</Button>
+                <Button onClick={()=>{}}>
+                    Undo
+                </Button>
             </ListGroupItem>
         </ListGroup>
     );
