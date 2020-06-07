@@ -8,6 +8,7 @@ import {
     InputGroupAddon
 } from 'reactstrap';
 import BackgammonBoard from './BoardUI/BackgammonBoard';
+import BackgammonExtras from './BoardUI/BackgammonExtras';
 
 function Main({ boardState, startRoom, joinRoom, doSubmove }) {  
     const [joinName, setJoinName] = useState('');
@@ -57,8 +58,13 @@ function Main({ boardState, startRoom, joinRoom, doSubmove }) {
 
                 { boardState === null ? null :
                     <>
-                        dice: { boardState.dice }, turn: {boardState.turn.name}
-                        <BackgammonBoard boardState={boardState} doSubmove={doSubmove} />
+                        <BackgammonExtras
+                            boardState={boardState}
+                        />
+                        <BackgammonBoard
+                            boardState={boardState}
+                            doSubmove={doSubmove}
+                        />
                     </>
                 }
                 
