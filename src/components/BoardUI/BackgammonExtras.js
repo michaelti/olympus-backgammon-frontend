@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    ListGroup,
-    ListGroupItem,
-    Button,
-    CardHeader
-} from 'reactstrap';
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 
 function BackgammonExtras({ boardState }) {
     return (
