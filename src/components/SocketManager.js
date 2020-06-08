@@ -37,8 +37,8 @@ function SocketManager() {
     };
 
     // Send a submove to the server, get a new board state
-    const doSubmove = ({ from, to }) => {
-        socket.emit('game/submove', { from, to }, (board) => {
+    const doSubmove = (from, to) => {
+        socket.emit('game/submove', from, to, (board) => {
             setBoardState(board);
         });
     };

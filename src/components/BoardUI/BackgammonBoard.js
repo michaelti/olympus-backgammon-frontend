@@ -18,7 +18,7 @@ function BackgammonBoard({ boardState, doSubmove }) {
             }
         } else if (sourcePip !== clickedPip ) {
             // Complete the started move
-            doSubmove({ from: sourcePip, to: clickedPip });
+            doSubmove(sourcePip, clickedPip);
             setSourcePip(undefined);
             setMoving(false);
         }
