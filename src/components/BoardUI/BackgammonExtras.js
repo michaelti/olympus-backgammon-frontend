@@ -5,7 +5,7 @@ function BackgammonExtras({ boardState, applyTurn, undoTurn }) {
     return (
         <ListGroup horizontal="lg">
             <ListGroupItem>
-                Turn: { boardState.turn.name }
+                Turn: { boardState.turn }
             </ListGroupItem>
             <ListGroupItem>
                 Dice: { JSON.stringify(boardState.dice) }
