@@ -69,8 +69,8 @@ function BackgammonBoard({ boardState, doSubmove }) {
                         posX={posX}
                         invertY={invertY}
                         size={pip.size}
-                        top={pip.top.name.toLowerCase()}
-                        bot={pip.bot.name.toLowerCase()}
+                        top={pip.top}
+                        bot={pip.bot}
                         onClick={() => handleClickPip(i)}
                     />
                 );
