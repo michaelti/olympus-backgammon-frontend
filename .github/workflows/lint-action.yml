@@ -1,19 +1,23 @@
+name: Lint
 
-name: Lint Action
-on: [push]
+on: push
+
 jobs:
-  lint-action:
+  run-linters:
+    name: Run linters
     runs-on: ubuntu-latest
-    name: Lint action
+
     steps:
-      - name: Checkout git repository
+      - name: Checkout Git repository
         uses: actions/checkout@v2
-        
-      - name: Install packages
+          
+      - name: Install npm packages
         uses: bahmutov/npm-install@v1
-        
+
       - name: Run linters
         uses: samuelmeuli/lint-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Enable linters
+          eslint: true
           prettier: true
