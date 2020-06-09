@@ -39,6 +39,8 @@
     "prettier": "2.0.5"
   },
   "prettier": {
-    "tabWidth": 4
+    "tabWidth": 4,
+    "printWidth": 100,
+    "jsxBracketSameLine": true
   }
 }
