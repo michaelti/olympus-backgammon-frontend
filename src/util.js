@@ -4,11 +4,8 @@ export const Player = Object.freeze({
     white:  1,
     black: -1,
     properties: {
-        '0':  { name: 'Neither' },
-        '1':  { name: 'White' },
-        '-1': { name: 'Black' },
-    },
-    getColor(value) {
-        return this.properties[value].name;
+        '0':  { colorName: 'Neither' },
+        '1':  { colorName: 'White' },
+        '-1': { colorName: 'Black' },
     },
 });

@@ -6,7 +6,7 @@ function BackgammonExtras({ boardState, applyTurn, undoTurn }) {
     return (
         <ListGroup horizontal="lg">
             <ListGroupItem>
-                Turn: { Player.getColor(boardState.turn) }
+                Turn: { Player.properties[boardState.turn].colorName }
             </ListGroupItem>
             <ListGroupItem>
                 Dice: { JSON.stringify(boardState.dice) }
