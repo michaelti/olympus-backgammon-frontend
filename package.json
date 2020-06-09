@@ -29,5 +29,11 @@
     "not dead",
     "not op_mini all",
     "not ie <= 11"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "2.0.5"
+  },
+  "prettier": {
+    "tabWidth": 4
+  }
 }
