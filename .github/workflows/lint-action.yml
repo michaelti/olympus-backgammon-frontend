@@ -15,4 +15,5 @@ jobs:
       - name: Run linters
         uses: samuelmeuli/lint-action@v1
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           prettier: true
