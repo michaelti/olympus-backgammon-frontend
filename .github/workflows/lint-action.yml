@@ -1,1 +1,19 @@
 
+name: Lint Action
+on: [push]
+jobs:
+  lint-action:
+    runs-on: ubuntu-latest
+    name: Lint action
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v2
+        
+      - name: Install packages
+        uses: bahmutov/npm-install@v1
+        
+      - name: Run linters
+        uses: samuelmeuli/lint-action@v1
+        with:
+          eslint: true
+          prettier: true
