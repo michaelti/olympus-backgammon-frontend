@@ -1,18 +1,16 @@
 name: Lint
-
 on: push
-
 jobs:
-  run-linters:
+  eslint:
     name: ESLint / Prettier
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
           
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
 
       - name: Run ESLint with Prettier plugin
-        run: npm run lint
+        uses: reviewdog/action-eslint@v1
