@@ -1,16 +1,14 @@
-name: Lint
+name: reviewdog
 on: [pull_request]
 jobs:
   eslint:
-    name: ESLint / Prettier
+    name: runner/eslint
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v1
-          
-      - name: Install npm packages
-        uses: bahmutov/npm-install@v1
-
-      - name: Run ESLint with Prettier plugin
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1
+      - name: eslint
         uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-pr-review
