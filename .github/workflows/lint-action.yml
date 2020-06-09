@@ -4,17 +4,15 @@ on: push
 
 jobs:
   run-linters:
+    name: ESLint / Prettier
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Git repository
+      - name: Checkout git repository
         uses: actions/checkout@v2
           
       - name: Install npm packages
         uses: bahmutov/npm-install@v1
 
-      - name: Run linters
-        uses: samuelmeuli/lint-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          eslint: true
+      - name: Run ESLint with Prettier plugin
+        run: npm run lint
