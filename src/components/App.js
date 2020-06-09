@@ -6,8 +6,8 @@ function App() {
     var test = 'test';
     return (
         <div className="App">
-            <GlobalStyles test='test' />
-            <SocketManager />
+          <GlobalStyles test='test' />
+          <SocketManager />
         </div>
     );
 }
