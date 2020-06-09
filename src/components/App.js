@@ -5,7 +5,7 @@ import SocketManager from './SocketManager';
 function App() {
     return (
         <div className="App">
-            <GlobalStyles test="test" />
+            <GlobalStyles test='test' />
             <SocketManager />
         </div>
     );
