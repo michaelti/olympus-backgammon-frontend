@@ -12,3 +12,5 @@ jobs:
             # Run eslint using reviewdog
             - name: eslint
               uses: reviewdog/action-eslint@v1
+              with:
+                  eslint_flags: "src/"
