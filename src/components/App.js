@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
           <GlobalStyles test='test' />
-          <SocketManager />
+                            <SocketManager />
         </div>
     );
 }
