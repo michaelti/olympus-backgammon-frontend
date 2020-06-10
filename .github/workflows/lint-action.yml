@@ -14,4 +14,3 @@ jobs:
               uses: reviewdog/action-eslint@v1
               with:
                   eslint_flags: "src/"
-                  level: warning
