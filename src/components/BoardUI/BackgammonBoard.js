@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Pip from "./Pip";
 import Off from "./Off";
 import Bar from "./Bar";
+import BackgroundSVG from "./svg/background.svg";
 
 function BackgammonBoard({ boardState, doSubmove }) {
     const [moving, setMoving] = useState(false);
@@ -26,7 +27,7 @@ function BackgammonBoard({ boardState, doSubmove }) {
 
     return (
         <svg viewBox="0 0 1500 1200" style={{ width: "100%" }}>
-            <rect className="background" width="1500" height="1200" fill="#402d26" />
+            <image href={BackgroundSVG} width="1500" height="1200" />
 
             <Off posX={1400} invertY count={boardState.offWhite} color="white" />
             <Off posX={0} invertY />
