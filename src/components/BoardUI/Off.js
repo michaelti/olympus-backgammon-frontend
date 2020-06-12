@@ -2,7 +2,7 @@ import React from "react";
 import Checker from "./Checker";
 import OffSVG from "./svg/off.svg";
 
-function Off({ count, color, posX, invertY }) {
+function Off({ count, color, posX, invertY, disabled }) {
     const checkers = Array(count).fill(color);
 
     const squishAmount =
