@@ -3,7 +3,7 @@ import Checker from "./Checker";
 import OffSVG from "./svg/off.svg";
 
 function Off({ count, color, posX, invertY, disabled }) {
-    const checkers = Array(count).fill(color);
+    const checkers = !disabled ? Array(count).fill(color) : Array(0);
 
     const squishAmount =
         checkers.length > 6 ? ((checkers.length - 6) * 100) / (checkers.length - 1) : 0;

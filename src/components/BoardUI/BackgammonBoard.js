@@ -31,9 +31,8 @@ function BackgammonBoard({ boardState, doSubmove }) {
             <image href={BackgroundSVG} width="1500" height="1200" />
 
             <Off posX={1400} invertY count={boardState.offWhite} color={Player.white} />
-            <Off posX={0} invertY />
-
-            <Off posX={0} />
+            <Off posX={0} invertY disabled />
+            <Off posX={0} disabled />
             <Off posX={1400} count={boardState.offBlack} color={Player.black} />
 
             <Bar posX={700} invertY count={boardState.barWhite} color={Player.white} />
