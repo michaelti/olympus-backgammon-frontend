@@ -1,6 +1,6 @@
-# Olympus Backgammon - front-end
+# Olympus Backgammon – frontend
 
-React front-end for the work-in-progress Olympus Backgammon project. Connects to a separate [back-end](https://github.com/michaelti/olympus-backgammon-backend) Node.js server.
+React frontend for the work-in-progress Olympus Backgammon project. Connects to a separate [backend](https://github.com/michaelti/olympus-backgammon-backend) Node.js server.
 
 ![reviewdog](https://github.com/michaelti/olympus-backgammon-frontend/workflows/reviewdog/badge.svg)
 
@@ -9,7 +9,7 @@ React front-end for the work-in-progress Olympus Backgammon project. Connects to
 1. Install dependencies: `npm install`
 2. Run the start script: `npm start`
 
-Be sure to create a local `.env` file in the project root with the key `REACT_APP_BACKEND_URL` pointing to the back-end server.
+Be sure to create a local `.env` file in the project root with the key `REACT_APP_BACKEND_URL` pointing to the backend server.
 
 ## Deployment
 
