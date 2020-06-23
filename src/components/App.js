@@ -1,12 +1,17 @@
 import React from "react";
 import GlobalStyles from "../styles/globalStyles";
 import SocketManager from "./SocketManager";
+import Header from "./Header";
+import Main from "./Main";
 
 function App() {
     return (
         <div className="App">
             <GlobalStyles />
-            <SocketManager />
+            <SocketManager>
+                <Header />
+                <Main />
+            </SocketManager>
         </div>
     );
 }

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Main from "./Main";
+import { useState, useEffect, Children, cloneElement } from "react";
 import useSocket from "../hooks/useSocket";
 
-function SocketManager() {
+function SocketManager({ children }) {
     const [socket, isConnected, isConnecting] = useSocket(process.env.REACT_APP_BACKEND_URL);
 
     const [roomName, setRoomName] = useState("");
@@ -51,19 +49,23 @@ function SocketManager() {
     // Tell the server to undo our submoves
     const undoTurn = () => socket.emit("game/undo");
 
-    return (
-        <div>
-            <Header roomName={roomName} isConnecting={isConnecting} isConnected={isConnected} />
-            <Main
-                boardState={boardState}
-                startRoom={startRoom}
-                joinRoom={joinRoom}
-                doSubmove={doSubmove}
-                applyTurn={applyTurn}
-                undoTurn={undoTurn}
-            />
-        </div>
-    );
+    /* */
+    /* */
+    /* Render the child components, passing down all of the managed props  */
+
+    return Children.map(children, (child) => {
+        return cloneElement(child, {
+            roomName,
+            isConnecting,
+            isConnected,
+            boardState,
+            startRoom,
+            joinRoom,
+            doSubmove,
+            applyTurn,
+            undoTurn,
+        });
+    });
 }
 
 export default SocketManager;
