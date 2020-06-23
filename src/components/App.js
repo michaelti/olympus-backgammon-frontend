@@ -3,6 +3,7 @@ import GlobalStyles from "../styles/globalStyles";
 import SocketManager from "./SocketManager";
 import Header from "./Header";
 import Main from "./Main";
+import Game from "./Game";
 
 function App() {
     return (
@@ -11,6 +12,7 @@ function App() {
             <SocketManager>
                 <Header />
                 <Main />
+                <Game />
             </SocketManager>
         </div>
     );
