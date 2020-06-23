@@ -1,5 +1,8 @@
-import { useState, useEffect, Children, cloneElement } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import useSocket from "../hooks/useSocket";
+
+const SocketContext = createContext({});
+export const useSocketContext = () => useContext(SocketContext);
 
 function SocketManager({ children }) {
     const [socket, isConnected, isConnecting] = useSocket(process.env.REACT_APP_BACKEND_URL);
@@ -51,21 +54,24 @@ function SocketManager({ children }) {
 
     /* */
     /* */
-    /* Render the child components, passing down all of the managed props  */
+    /* Render the child components, passing down all of the managed props through the tree  */
 
-    return Children.map(children, (child) => {
-        return cloneElement(child, {
-            roomName,
-            isConnecting,
-            isConnected,
-            boardState,
-            startRoom,
-            joinRoom,
-            doSubmove,
-            applyTurn,
-            undoTurn,
-        });
-    });
+    return (
+        <SocketContext.Provider
+            value={{
+                roomName,
+                isConnecting,
+                isConnected,
+                boardState,
+                startRoom,
+                joinRoom,
+                doSubmove,
+                applyTurn,
+                undoTurn,
+            }}>
+            {children}
+        </SocketContext.Provider>
+    );
 }
 
 export default SocketManager;

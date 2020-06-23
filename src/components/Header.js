@@ -1,7 +1,10 @@
 import React from "react";
 import { Container, Navbar, NavbarBrand, Nav, NavbarText } from "reactstrap";
+import { useSocketContext } from "./SocketManager";
 
-function Header({ roomName, isConnected, isConnecting }) {
+function Header() {
+    const { roomName, isConnected, isConnecting } = useSocketContext();
+
     return (
         <header>
             <Navbar color="light" light expand="xs">

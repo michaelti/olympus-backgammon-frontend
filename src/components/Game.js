@@ -2,8 +2,11 @@ import React from "react";
 import { Container } from "reactstrap";
 import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
+import { useSocketContext } from "./SocketManager";
 
-function Game({ boardState, doSubmove, applyTurn, undoTurn }) {
+function Game() {
+    const { boardState, doSubmove, applyTurn, undoTurn } = useSocketContext();
+
     return boardState === null ? null : (
         <Container className="py-5">
             <BackgammonExtras boardState={boardState} applyTurn={applyTurn} undoTurn={undoTurn} />
