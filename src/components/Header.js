@@ -22,7 +22,9 @@ function Header({ roomName }) {
                                 ? "Connected"
                                 : "Disconnected"}
                         </NavbarText>
-                        <NavbarText>Room name: {roomName}</NavbarText>
+                        <NavbarText>
+                            Room name: <Link to={"/room/" + roomName}>{roomName}</Link>
+                        </NavbarText>
                     </Nav>
                 </Container>
             </Navbar>
