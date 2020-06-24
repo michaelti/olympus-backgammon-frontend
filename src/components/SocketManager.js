@@ -41,6 +41,17 @@ function SocketManager({ children }) {
         });
     };
 
+    // Leave the current room, receive confirmation and room name
+    const leaveRoom = () => {
+        socket.emit("event/leave-room", roomName, (acknowledgement) => {
+            if (!acknowledgement.ok) {
+                console.log(`Failed to leave room "${acknowledgement.roomName}".`);
+            } else {
+                setRoomName("");
+            }
+        });
+    };
+
     /* GAME EVENT EMITTERS */
 
     // Send a submove to the server
@@ -65,6 +76,7 @@ function SocketManager({ children }) {
                 boardState,
                 startRoom,
                 joinRoom,
+                leaveRoom,
                 doSubmove,
                 applyTurn,
                 undoTurn,
