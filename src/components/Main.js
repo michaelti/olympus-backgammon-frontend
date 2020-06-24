@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Container, Button, Input, Form, InputGroup, InputGroupAddon } from "reactstrap";
-import { useSocketContext } from "./SocketManager";
 
-function Main() {
-    const { startRoom, joinRoom } = useSocketContext();
-
+function Main({ startRoom, joinRoom }) {
     const [joinName, setJoinName] = useState("");
 
     const handleChange = (event) => {

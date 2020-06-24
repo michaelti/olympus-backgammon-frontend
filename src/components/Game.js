@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "reactstrap";
 import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
-import { useSocketContext } from "./SocketManager";
+import { useListener, doEmitter } from "../api";
 
 function Game() {
-    const { boardState, doSubmove, applyTurn, undoTurn } = useSocketContext();
+    const [boardState, setBoardState] = useState(null);
+
+    useListener("game/update-board", (board) => {
+        setBoardState(board);
+    });
+
+    const doSubmove = (from, to) => doEmitter("game/submove", from, to);
+    const applyTurn = () => doEmitter("game/apply-turn");
+    const undoTurn = () => doEmitter("game/undo");
 
     return boardState === null ? null : (
         <Container className="py-5">
