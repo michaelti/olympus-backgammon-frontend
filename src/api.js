@@ -19,7 +19,6 @@ socket.on("connect", () => {
 socket.on("disconnect", () => {
     socketStatus.isConnected = false;
     socketStatus.isConnecting = false;
-    socketStatus.latency = null;
 });
 
 socket.on("reconnecting", () => {
