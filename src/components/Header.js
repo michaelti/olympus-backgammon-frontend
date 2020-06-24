@@ -1,9 +1,9 @@
 import React from "react";
 import { Container, Navbar, NavbarBrand, Nav, NavbarText } from "reactstrap";
-import { useConnectionStatus } from "../api";
+import { useSocketStatus } from "../api";
 
 function Header({ roomName }) {
-    const [isConnected] = useConnectionStatus();
+    const [isConnected, isConnecting] = useSocketStatus();
 
     return (
         <header>
@@ -12,7 +12,12 @@ function Header({ roomName }) {
                     <NavbarBrand>Olympus Backgammon</NavbarBrand>
                     <Nav className="ml-auto" navbar>
                         <NavbarText className="mr-3">
-                            Status: {isConnected ? "Connected" : "Disconnected"}
+                            Status:{" "}
+                            {isConnecting
+                                ? "Connecting"
+                                : isConnected
+                                ? "Connected"
+                                : "Disconnected"}
                         </NavbarText>
                         <NavbarText>Room name: {roomName}</NavbarText>
                     </Nav>

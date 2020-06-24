@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Container, Button, Input, Form, InputGroup, InputGroupAddon } from "reactstrap";
+import { socketEmit } from "../api";
 
-function Main({ startRoom, joinRoom }) {
+function Main({ setRoomName }) {
     const [joinName, setJoinName] = useState("");
 
     const handleChange = (event) => {
@@ -11,6 +12,26 @@ function Main({ startRoom, joinRoom }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         joinRoom(joinName);
+    };
+
+    const startRoom = () => {
+        socketEmit("event/start-room", (acknowledgement) => {
+            if (!acknowledgement.ok) {
+                console.log(`Failed to start room "${acknowledgement.roomName}".`);
+            } else {
+                setRoomName(acknowledgement.roomName);
+            }
+        });
+    };
+
+    const joinRoom = (roomName) => {
+        socketEmit("event/join-room", roomName, (acknowledgement) => {
+            if (!acknowledgement.ok) {
+                console.log(`Failed to join room "${acknowledgement.roomName}".`);
+            } else {
+                setRoomName(acknowledgement.roomName);
+            }
+        });
     };
 
     return (
