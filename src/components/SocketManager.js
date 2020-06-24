@@ -25,7 +25,7 @@ function SocketManager({ children }) {
             if (!acknowledgement.ok) {
                 console.log(`Failed to start room "${acknowledgement.roomName}".`);
             } else {
-                setRoomName(acknowledgement.roomName);
+                joinRoom(acknowledgement.roomName);
             }
         });
     };
