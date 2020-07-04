@@ -4,9 +4,10 @@ import { Player } from "../../util";
 import Dice from "./Dice";
 
 function BackgammonExtras({ boardState: { turn, dice }, applyTurn, undoTurn }) {
-    const [initialDice, setInitialDice] = useState(dice);
     const [prevTurn, setPrevTurn] = useState(turn);
+    const [initialDice, setInitialDice] = useState(dice);
 
+    // If the turn has changed, set the new initial dice
     if (prevTurn !== turn) {
         setPrevTurn(turn);
         setInitialDice(dice);
