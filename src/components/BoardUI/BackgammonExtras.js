@@ -1,23 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { ListGroup, ListGroupItem, Button } from "reactstrap";
 import { Player } from "../../util";
 import Dice from "./Dice";
 
-function BackgammonExtras({ boardState: { turn, dice }, applyTurn, undoTurn }) {
-    const [prevTurn, setPrevTurn] = useState(turn);
-    const [initialDice, setInitialDice] = useState(dice);
-
-    // If the turn has changed, set the new initial dice
-    if (prevTurn !== turn) {
-        setPrevTurn(turn);
-        setInitialDice(dice);
-    }
-
+function BackgammonExtras({ boardState: { turn, diceRolled, dice }, applyTurn, undoTurn }) {
     return (
         <ListGroup horizontal="lg">
             <ListGroupItem>Turn: {Player.properties[turn].colorName}</ListGroupItem>
             <ListGroupItem>
-                <Dice initialDice={initialDice} remainingDice={dice} />
+                <Dice initialDice={diceRolled} remainingDice={dice} />
             </ListGroupItem>
             <ListGroupItem>
                 <Button onClick={applyTurn} color="success">
