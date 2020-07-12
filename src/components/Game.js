@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
+import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { useSocketOn, socketEmit } from "../api";
+import styled from "styled-components";
 
-function Game() {
+const BoardContainer = styled.div`
+    position: relative;
+`;
+
+function Game({ player, showOverlay }) {
     const [boardState, setBoardState] = useState(null);
 
     useSocketOn("game/update-board", (board) => {
@@ -16,8 +22,16 @@ function Game() {
 
     return boardState === null ? null : (
         <>
-            <BackgammonExtras boardState={boardState} applyTurn={applyTurn} undoTurn={undoTurn} />
-            <BackgammonBoard boardState={boardState} doMove={doMove} />
+            <BackgammonExtras
+                boardState={boardState}
+                applyTurn={applyTurn}
+                undoTurn={undoTurn}
+                player={player}
+            />
+            <BoardContainer>
+                <BackgammonBoard boardState={boardState} doMove={doMove} />
+                {showOverlay ? <BackgammonOverlay /> : null}
+            </BoardContainer>
         </>
     );
 }

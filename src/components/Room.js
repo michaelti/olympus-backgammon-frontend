@@ -3,7 +3,6 @@ import { useParams, Redirect } from "react-router-dom";
 import { useSocketOn, socketEmit } from "../api";
 import { Container } from "reactstrap";
 import { Player, RoomState } from "../util";
-import { Badge } from "reactstrap";
 import RoomSetup from "./RoomSetup";
 import Game from "./Game";
 
@@ -32,11 +31,8 @@ function Room({ setRoomName }) {
 
     return (
         <Container className="py-5">
-            <Badge className="mb-3">
-                {player ? `Playing as ${Player.properties[player].colorName}` : "Spectating"}
-            </Badge>
             {player === Player.white && roomState === RoomState.setup ? <RoomSetup /> : null}
-            <Game />
+            <Game player={player} showOverlay={roomState === RoomState.startingRoll} />
         </Container>
     );
 }
