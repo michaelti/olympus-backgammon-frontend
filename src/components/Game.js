@@ -4,13 +4,13 @@ import BackgammonExtras from "./BoardUI/BackgammonExtras";
 import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { useSocketOn, socketEmit } from "../api";
 import styled from "styled-components";
-import { RoomState } from "../util";
+import { RoomStep } from "../util";
 
 const BoardContainer = styled.div`
     position: relative;
 `;
 
-function Game({ player, roomState }) {
+function Game({ player, roomStep, startingRolls }) {
     const [boardState, setBoardState] = useState(null);
 
     useSocketOn("game/update-board", (board) => {
@@ -31,10 +31,10 @@ function Game({ player, roomState }) {
             />
             <BoardContainer>
                 <BackgammonBoard boardState={boardState} doMove={doMove} />
-                {roomState.state === RoomState.startingRoll ? (
+                {roomStep === RoomStep.startingRoll ? (
                     <BackgammonOverlay
-                        dieWhite={roomState.startingRolls.white}
-                        dieBlack={roomState.startingRolls.black}
+                        dieWhite={startingRolls.white}
+                        dieBlack={startingRolls.black}
                         player={player}
                     />
                 ) : null}

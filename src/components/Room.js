@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import { useSocketOn, socketEmit } from "../api";
 import { Container } from "reactstrap";
-import { Player, RoomState } from "../util";
+import { Player, RoomStep } from "../util";
 import RoomSetup from "./RoomSetup";
 import Game from "./Game";
 
@@ -31,8 +31,12 @@ function Room({ setRoomName }) {
 
     return (
         <Container className="py-5">
-            {player === Player.white && roomState.state === RoomState.setup ? <RoomSetup /> : null}
-            <Game player={player} roomState={roomState} />
+            {player === Player.white && roomState.step === RoomStep.setup ? <RoomSetup /> : null}
+            <Game
+                player={player}
+                roomStep={roomState.step}
+                startingRolls={roomState.startingRolls}
+            />
         </Container>
     );
 }
