@@ -9,7 +9,7 @@ import Game from "./Game";
 function Room({ setRoomName }) {
     const { roomName } = useParams();
     const [player, setPlayer] = useState(undefined);
-    const [roomState, setRoomState] = useState(undefined);
+    const [roomState, setRoomState] = useState({});
     const [failedJoin, setFailedJoin] = useState(false);
 
     useEffect(() => {
@@ -24,15 +24,15 @@ function Room({ setRoomName }) {
     }, [roomName, setRoomName]);
 
     useSocketOn("room/update-room", (room) => {
-        setRoomState(room.state);
+        setRoomState(room);
     });
 
     if (failedJoin) return <Redirect to="/" />;
 
     return (
         <Container className="py-5">
-            {player === Player.white && roomState === RoomState.setup ? <RoomSetup /> : null}
-            <Game player={player} showOverlay={roomState === RoomState.startingRoll} />
+            {player === Player.white && roomState.state === RoomState.setup ? <RoomSetup /> : null}
+            <Game player={player} roomState={roomState} />
         </Container>
     );
 }
