@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "reactstrap";
 import Die from "./Die";
+import { socketEmit } from "../../api";
+import { Player } from "../../util";
 
 const Overlay = styled.div`
     position: absolute;
@@ -22,16 +24,24 @@ const Overlay = styled.div`
     }
 `;
 
-function BackgammonOverlay({ dieWhite, dieBlack }) {
+function BackgammonOverlay({ dieWhite, dieBlack, player }) {
+    const doStartingRoll = () => {
+        socketEmit("room/starting-roll");
+    };
+
     return (
         <Overlay>
             <div>
-                {dieWhite ? <Die number={1} /> : null}
-                {!dieWhite || dieWhite === dieBlack ? <Button>Roll to go first</Button> : null}
+                {dieWhite ? <Die number={dieWhite} /> : null}
+                {player === Player.white && (!dieWhite || dieWhite === dieBlack) ? (
+                    <Button onClick={doStartingRoll}>Roll to go first</Button>
+                ) : null}
             </div>
             <div>
-                {dieBlack ? <Die number={1} /> : null}
-                {!dieBlack || dieWhite === dieBlack ? <Button>Roll to go first</Button> : null}
+                {dieBlack ? <Die number={dieBlack} /> : null}
+                {player === Player.black && (!dieBlack || dieWhite === dieBlack) ? (
+                    <Button onClick={doStartingRoll}>Roll to go first</Button>
+                ) : null}
             </div>
         </Overlay>
     );

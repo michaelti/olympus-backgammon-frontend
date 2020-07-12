@@ -31,7 +31,13 @@ function Game({ player, roomState }) {
             />
             <BoardContainer>
                 <BackgammonBoard boardState={boardState} doMove={doMove} />
-                {roomState.state === RoomState.startingRoll ? <BackgammonOverlay /> : null}
+                {roomState.state === RoomState.startingRoll ? (
+                    <BackgammonOverlay
+                        dieWhite={roomState.startingRolls.white}
+                        dieBlack={roomState.startingRolls.black}
+                        player={player}
+                    />
+                ) : null}
             </BoardContainer>
         </>
     );
