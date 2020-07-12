@@ -32,7 +32,8 @@ function RoomSetup() {
                         onClick={() => setSelectedVariant(1)}
                         active={selectedVariant === 1}
                         tag="button"
-                        action>
+                        action
+                        disabled>
                         Portes
                     </ListGroupItem>
                     <ListGroupItem
@@ -46,7 +47,8 @@ function RoomSetup() {
                         onClick={() => setSelectedVariant(3)}
                         active={selectedVariant === 3}
                         tag="button"
-                        action>
+                        action
+                        disabled>
                         Fevga
                     </ListGroupItem>
                 </ListGroup>
