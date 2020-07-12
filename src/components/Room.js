@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Redirect } from "react-router-dom";
-import { socketEmit } from "../api";
+import { useSocketOn, socketEmit } from "../api";
 import { Container } from "reactstrap";
 import { Player } from "../util";
 import { Badge } from "reactstrap";
@@ -10,6 +10,8 @@ import Game from "./Game";
 function Room({ setRoomName }) {
     const { roomName } = useParams();
     const [player, setPlayer] = useState(undefined);
+    const [isHost, setIsHost] = useState(undefined);
+    const [roomState, setRoomState] = useState(undefined);
     const [failedJoin, setFailedJoin] = useState(false);
 
     useEffect(() => {
@@ -19,9 +21,14 @@ function Room({ setRoomName }) {
             } else {
                 setRoomName(acknowledgement.roomName);
                 setPlayer(acknowledgement.player);
+                setIsHost(acknowledgement.isHost);
             }
         });
     }, [roomName, setRoomName]);
+
+    useSocketOn("room/update-room", (room) => {
+        setRoomState(room.state);
+    });
 
     if (failedJoin) return <Redirect to="/" />;
 
@@ -30,7 +37,7 @@ function Room({ setRoomName }) {
             <Badge className="mb-3">
                 {player ? `Playing as ${Player.properties[player].colorName}` : "Spectating"}
             </Badge>
-            <RoomSetup />
+            {isHost && roomState === 1 ? <RoomSetup /> : null}
             <Game />
         </Container>
     );
