@@ -19,8 +19,13 @@ const Overlay = styled.div`
     > div {
         flex: 0 0 50%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        > *:not(:last-child) {
+            margin-bottom: 0.5em;
+        }
     }
 `;
 
