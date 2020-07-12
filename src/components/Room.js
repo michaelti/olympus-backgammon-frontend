@@ -4,6 +4,7 @@ import { socketEmit } from "../api";
 import { Container } from "reactstrap";
 import { Player } from "../util";
 import { Badge } from "reactstrap";
+import RoomSetup from "./RoomSetup";
 import Game from "./Game";
 
 function Room({ setRoomName }) {
@@ -29,6 +30,7 @@ function Room({ setRoomName }) {
             <Badge className="mb-3">
                 {player ? `Playing as ${Player.properties[player].colorName}` : "Spectating"}
             </Badge>
+            <RoomSetup />
             <Game />
         </Container>
     );
