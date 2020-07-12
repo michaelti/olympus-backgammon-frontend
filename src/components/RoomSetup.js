@@ -12,13 +12,13 @@ import {
 
 function RoomSetup() {
     const [selectedVariant, setSelectedVariant] = useState(null);
-    const [isModalOpen, setModalIsOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
-    const sendVariant = (variant) => {
-        socketEmit("room/select-variant", variant, (acknowledgement) => {
-            if (!acknowledgement.ok) {
+    const sendVariant = () => {
+        socketEmit("room/select-variant", selectedVariant, (acknowledgement) => {
+            if (acknowledgement.ok) {
                 setSelectedVariant(null);
-                setModalIsOpen(false);
+                setIsModalOpen(false);
             }
         });
     };
