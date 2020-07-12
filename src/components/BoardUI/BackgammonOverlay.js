@@ -39,13 +39,17 @@ function BackgammonOverlay({ dieWhite, dieBlack, player }) {
             <div>
                 {dieWhite ? <Die number={dieWhite} /> : null}
                 {player === Player.white && (!dieWhite || dieWhite === dieBlack) ? (
-                    <Button onClick={doStartingRoll}>Roll to go first</Button>
+                    <Button onClick={doStartingRoll}>
+                        {!dieWhite ? "Roll to go first" : "Roll again"}
+                    </Button>
                 ) : null}
             </div>
             <div>
                 {dieBlack ? <Die number={dieBlack} /> : null}
                 {player === Player.black && (!dieBlack || dieWhite === dieBlack) ? (
-                    <Button onClick={doStartingRoll}>Roll to go first</Button>
+                    <Button onClick={doStartingRoll}>
+                        {!dieBlack ? "Roll to go first" : "Roll again"}
+                    </Button>
                 ) : null}
             </div>
         </Overlay>
