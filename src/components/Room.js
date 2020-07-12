@@ -10,7 +10,6 @@ import Game from "./Game";
 function Room({ setRoomName }) {
     const { roomName } = useParams();
     const [player, setPlayer] = useState(undefined);
-    const [isHost, setIsHost] = useState(undefined);
     const [roomState, setRoomState] = useState(undefined);
     const [failedJoin, setFailedJoin] = useState(false);
 
@@ -21,7 +20,6 @@ function Room({ setRoomName }) {
             } else {
                 setRoomName(acknowledgement.roomName);
                 setPlayer(acknowledgement.player);
-                setIsHost(acknowledgement.isHost);
             }
         });
     }, [roomName, setRoomName]);
@@ -37,7 +35,7 @@ function Room({ setRoomName }) {
             <Badge className="mb-3">
                 {player ? `Playing as ${Player.properties[player].colorName}` : "Spectating"}
             </Badge>
-            {isHost && roomState === 1 ? <RoomSetup /> : null}
+            {player === Player.white && roomState === 1 ? <RoomSetup /> : null}
             <Game />
         </Container>
     );
