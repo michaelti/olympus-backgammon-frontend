@@ -15,7 +15,7 @@ function RoomSetup() {
     const [isModalOpen, setModalIsOpen] = useState(true);
 
     const sendVariant = (variant) => {
-        socketEmit("room/set-variant", variant, (acknowledgement) => {
+        socketEmit("room/select-variant", variant, (acknowledgement) => {
             if (!acknowledgement.ok) {
                 setSelectedVariant(null);
                 setModalIsOpen(false);
