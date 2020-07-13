@@ -22,17 +22,15 @@ const BarsSVG = styled.svg`
     fill: rgba(0, 0, 0, 0.25);
 
     > rect {
-        ${(props) => (props.animate ? animationMixin : null)}
+        ${({ animate }) => (animate ? animationMixin : null)}
 
-        &:nth-child(-n + ${(props) => props.strength}) {
-            fill: ${(props) => {
-                if (props.strength === 1) return "red";
-                else if (props.strength === 2) return "orange";
-                else if (props.strength === 3) return "green";
+        &:nth-child(-n + ${({ strength }) => strength}) {
+            fill: ${({ strength }) => {
+                if (strength === 1) return "red";
+                else if (strength === 2) return "orange";
+                else if (strength === 3) return "green";
             }};
         }
-
-
     }
 `;
 
