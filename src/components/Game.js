@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
 import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { useSocketOn, socketEmit } from "../api";
-import styled from "styled-components";
-import { RoomStep } from "../util";
+import { Player, RoomStep } from "../util";
 
 const BoardContainer = styled.div`
     position: relative;
@@ -33,8 +33,8 @@ function Game({ player, roomStep, startingRolls }) {
                 <BackgammonBoard boardState={boardState} doMove={doMove} />
                 {roomStep === RoomStep.startingRoll ? (
                     <BackgammonOverlay
-                        dieWhite={startingRolls.white}
-                        dieBlack={startingRolls.black}
+                        dieWhite={startingRolls[Player.white]}
+                        dieBlack={startingRolls[Player.black]}
                         player={player}
                     />
                 ) : null}
