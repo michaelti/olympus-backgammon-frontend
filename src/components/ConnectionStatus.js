@@ -1,7 +1,7 @@
 import React from "react";
 import { UncontrolledTooltip } from "reactstrap";
 import { useSocketStatus, useSocketPing } from "../api";
-import SignalBars from "./SignalBars";
+import SignalBars from "./UI/SignalBars";
 
 function ConnectionStatus() {
     const [isConnected, isConnecting] = useSocketStatus();
