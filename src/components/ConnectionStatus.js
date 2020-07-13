@@ -18,6 +18,7 @@ function ConnectionStatus() {
     return (
         <span>
             <SignalBars animate={isConnecting} strength={pingStrength} id="connectionTooltip" />
+
             <UncontrolledTooltip placement="left" target="connectionTooltip">
                 {isConnected ? pingText : isConnecting ? "Connecting" : "Disconnected"}
             </UncontrolledTooltip>
