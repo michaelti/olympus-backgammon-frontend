@@ -31,7 +31,7 @@ function Room({ setRoomName }) {
 
     return (
         <Container className="py-5">
-            {player === Player.white && roomState.step === RoomStep.setup ? <RoomSetup /> : null}
+            <RoomSetup show={roomState.step === RoomStep.setup && player === Player.white} />
             <Game
                 player={player}
                 roomStep={roomState.step}
