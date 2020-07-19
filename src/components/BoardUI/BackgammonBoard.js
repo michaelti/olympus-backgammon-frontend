@@ -37,6 +37,7 @@ function BackgammonBoard({
         if (moving) {
             if (clickedOff === Player.white) doMove(sourcePip, 25);
             if (clickedOff === Player.black) doMove(sourcePip, 0);
+            setHighlightedPips([]);
             setSourcePip(undefined);
             setMoving(false);
         }
@@ -52,6 +53,7 @@ function BackgammonBoard({
                 count={offBlack}
                 color={Player.black}
                 onClick={() => handleClickOff(Player.black)}
+                highlighted={highlightedPips.includes(0)}
             />
             <Off posX={0} invertY disabled />
             <Off posX={0} disabled />
@@ -60,6 +62,7 @@ function BackgammonBoard({
                 count={offWhite}
                 color={Player.white}
                 onClick={() => handleClickOff(Player.white)}
+                highlighted={highlightedPips.includes(25)}
             />
 
             <Bar posX={700} invertY count={barWhite} color={Player.white} />

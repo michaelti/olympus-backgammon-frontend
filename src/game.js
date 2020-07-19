@@ -1,6 +1,6 @@
 import { Player } from "./util";
 
-const clamp = (to) => (to < 0 ? 0 : to > 25 ? 25 : to);
+export const clamp = (to) => (to < 0 ? 0 : to > 25 ? 25 : to);
 const range = (start, end, length = end - start + 1) => Array.from({ length }, (_, i) => start + i);
 
 export function isMoveValid(from, to, board) {
