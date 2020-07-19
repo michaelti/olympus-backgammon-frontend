@@ -10,14 +10,17 @@ function Off({ count, color, posX, invertY, disabled, onClick, highlighted }) {
 
     return (
         <g onClick={onClick}>
-            <image
-                href={OffSVG}
-                width="100"
-                height="600"
-                x={posX}
-                y={invertY ? "50%" : "0"}
-                style={highlighted ? { filter: "brightness(2)" } : {}}
-            />
+            <image href={OffSVG} width="100" height="600" x={posX} y={invertY ? "50%" : "0"} />
+
+            {highlighted ? (
+                <rect
+                    width="100"
+                    height="600"
+                    x={posX}
+                    y={invertY ? "50%" : "0"}
+                    fill="rgb(128, 128, 128)"
+                />
+            ) : null}
 
             {checkers.map((checker, i) => {
                 const posY = i * (100 - squishAmount);

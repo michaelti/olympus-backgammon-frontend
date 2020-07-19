@@ -15,6 +15,17 @@ function Pip({ size, top, bot, posX, invertY, onClick, active, highlighted }) {
 
     return (
         <g onClick={onClick}>
+            {highlighted ? (
+                <rect
+                    width="100"
+                    height="600"
+                    x={posX}
+                    y={invertY ? "-100%" : "0"}
+                    transform={invertY ? "scale(1, -1)" : ""}
+                    fill="rgb(128, 128, 128)"
+                />
+            ) : null}
+
             <image
                 href={PipSVG}
                 width="100"
@@ -22,7 +33,6 @@ function Pip({ size, top, bot, posX, invertY, onClick, active, highlighted }) {
                 x={posX}
                 y={invertY ? "-100%" : "0"}
                 transform={invertY ? "scale(1, -1)" : ""}
-                style={highlighted ? { filter: "brightness(2)" } : {}}
             />
 
             {checkers.map((checker, i) => {
