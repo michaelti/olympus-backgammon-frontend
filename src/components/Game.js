@@ -23,12 +23,12 @@ function Game({ player, roomStep, startingRolls, variant }) {
     const undoTurn = () => socketEmit("game/undo");
 
     const getPossiblePips = (from) => {
-        let possiblePips = [];
+        let possiblePips = {};
 
         for (const die of boardState.dice) {
             const to = clamp(from + die * boardState.turn);
             if (isMoveValid(from, to, boardState, variant)) {
-                possiblePips.push(to);
+                possiblePips[to] = true;
             }
         }
 

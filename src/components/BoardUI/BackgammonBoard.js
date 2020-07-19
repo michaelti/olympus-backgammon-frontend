@@ -12,7 +12,7 @@ function BackgammonBoard({
 }) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
-    const [highlightedPips, setHighlightedPips] = useState([]);
+    const [highlightedPips, setHighlightedPips] = useState({});
 
     const handleClickPip = (clickedPip) => {
         const clickedPipObj = pips[clickedPip];
@@ -27,7 +27,7 @@ function BackgammonBoard({
         } else if (sourcePip !== clickedPip) {
             // Complete the started move
             doMove(sourcePip, clickedPip);
-            setHighlightedPips([]);
+            setHighlightedPips({});
             setSourcePip(undefined);
             setMoving(false);
         }
@@ -37,7 +37,7 @@ function BackgammonBoard({
         if (moving) {
             if (clickedOff === Player.white) doMove(sourcePip, 25);
             if (clickedOff === Player.black) doMove(sourcePip, 0);
-            setHighlightedPips([]);
+            setHighlightedPips({});
             setSourcePip(undefined);
             setMoving(false);
         }
@@ -53,7 +53,7 @@ function BackgammonBoard({
                 count={offBlack}
                 color={Player.black}
                 onClick={() => handleClickOff(Player.black)}
-                highlighted={highlightedPips.includes(0)}
+                highlighted={highlightedPips[0]}
             />
             <Off posX={0} invertY disabled />
             <Off posX={0} disabled />
@@ -62,7 +62,7 @@ function BackgammonBoard({
                 count={offWhite}
                 color={Player.white}
                 onClick={() => handleClickOff(Player.white)}
-                highlighted={highlightedPips.includes(25)}
+                highlighted={highlightedPips[25]}
             />
 
             <Bar posX={700} invertY count={barWhite} color={Player.white} />
@@ -103,7 +103,7 @@ function BackgammonBoard({
                         bot={pip.bot}
                         onClick={() => handleClickPip(i)}
                         active={i === sourcePip}
-                        highlighted={highlightedPips.includes(i)}
+                        highlighted={highlightedPips[i]}
                     />
                 );
             })}
