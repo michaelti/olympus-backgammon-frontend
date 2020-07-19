@@ -26,9 +26,9 @@ function Game({ player, roomStep, startingRolls, variant }) {
         let possiblePips = [];
 
         for (const die of boardState.dice) {
-            const destinationPip = clamp(from + die * boardState.turn);
-            if (isMoveValid(from, destinationPip, boardState, variant)) {
-                possiblePips.push(destinationPip);
+            const to = clamp(from + die * boardState.turn);
+            if (isMoveValid(from, to, boardState, variant)) {
+                possiblePips.push(to);
             }
         }
 
