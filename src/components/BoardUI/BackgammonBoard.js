@@ -56,7 +56,7 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove }) {
             />
 
             <Bar posX={700} invertY count={bar[Player.white]} color={Player.white} />
-            <Bar posX={700} count={bar[Player.white]} color={Player.black} />
+            <Bar posX={700} count={bar[Player.black]} color={Player.black} />
 
             {pips.map((pip, i) => {
                 if (i === 0) return null;
