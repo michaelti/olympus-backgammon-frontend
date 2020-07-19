@@ -5,9 +5,14 @@ import Bar from "./Bar";
 import BackgroundSVG from "./svg/background.svg";
 import { Player } from "../../util.js";
 
-function BackgammonBoard({ boardState: { pips, offWhite, offBlack, barWhite, barBlack }, doMove }) {
+function BackgammonBoard({
+    boardState: { pips, offWhite, offBlack, barWhite, barBlack },
+    doMove,
+    getPossiblePips,
+}) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
+    const [highlightedPips, setHighlightedPips] = useState([]);
 
     const handleClickPip = (clickedPip) => {
         const clickedPipObj = pips[clickedPip];
@@ -17,10 +22,12 @@ function BackgammonBoard({ boardState: { pips, offWhite, offBlack, barWhite, bar
                 // Start a move
                 setMoving(true);
                 setSourcePip(clickedPip);
+                setHighlightedPips(getPossiblePips(clickedPip));
             }
         } else if (sourcePip !== clickedPip) {
             // Complete the started move
             doMove(sourcePip, clickedPip);
+            setHighlightedPips([]);
             setSourcePip(undefined);
             setMoving(false);
         }
@@ -93,6 +100,7 @@ function BackgammonBoard({ boardState: { pips, offWhite, offBlack, barWhite, bar
                         bot={pip.bot}
                         onClick={() => handleClickPip(i)}
                         active={i === sourcePip}
+                        highlighted={highlightedPips.includes(i)}
                     />
                 );
             })}

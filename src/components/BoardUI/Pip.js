@@ -2,7 +2,7 @@ import React from "react";
 import Checker from "./Checker";
 import PipSVG from "./svg/pip.svg";
 
-function Pip({ size, top, bot, posX, invertY, onClick, active }) {
+function Pip({ size, top, bot, posX, invertY, onClick, active, highlighted }) {
     let checkers = Array(size);
 
     if (checkers.length > 0) {
@@ -22,6 +22,7 @@ function Pip({ size, top, bot, posX, invertY, onClick, active }) {
                 x={posX}
                 y={invertY ? "-100%" : "0"}
                 transform={invertY ? "scale(1, -1)" : ""}
+                style={highlighted ? { filter: "brightness(2)" } : {}}
             />
 
             {checkers.map((checker, i) => {
