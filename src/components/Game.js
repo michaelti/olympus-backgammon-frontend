@@ -4,7 +4,7 @@ import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
 import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { useSocketOn, socketEmit } from "../api";
-import { Player, RoomStep, Variant } from "../util";
+import { Player, RoomStep } from "../util";
 import { isMoveValid, clamp } from "../game";
 
 const BoardContainer = styled.div`
@@ -25,12 +25,10 @@ function Game({ player, roomStep, startingRolls, variant }) {
     const getPossiblePips = (from) => {
         let possiblePips = [];
 
-        if (variant === Variant.plakoto) {
-            for (const die of boardState.dice) {
-                const destinationPip = clamp(from + die * boardState.turn);
-                if (isMoveValid(from, destinationPip, boardState)) {
-                    possiblePips.push(destinationPip);
-                }
+        for (const die of boardState.dice) {
+            const destinationPip = clamp(from + die * boardState.turn);
+            if (isMoveValid(from, destinationPip, boardState, variant)) {
+                possiblePips.push(destinationPip);
             }
         }
 
