@@ -5,7 +5,7 @@ import BackgammonExtras from "./BoardUI/BackgammonExtras";
 import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { useSocketOn, socketEmit } from "../api";
 import { Player, RoomStep } from "../util";
-import { isMoveValid, clamp } from "../game";
+import { getPossibleMoves } from "../game";
 
 const BoardContainer = styled.div`
     position: relative;
@@ -22,18 +22,7 @@ function Game({ player, roomStep, startingRolls, variant }) {
     const applyTurn = () => socketEmit("game/apply-turn");
     const undoTurn = () => socketEmit("game/undo");
 
-    const getPossiblePips = (from) => {
-        let possiblePips = new Set();
-
-        for (const die of boardState.dice) {
-            const to = clamp(from + die * boardState.turn);
-            if (isMoveValid(from, to, boardState, variant)) {
-                possiblePips.add(to);
-            }
-        }
-
-        return possiblePips;
-    };
+    const getPossiblePips = (from) => getPossibleMoves(from, boardState, variant);
 
     return boardState === null ? null : (
         <>
