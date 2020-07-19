@@ -5,7 +5,7 @@ import BackgammonExtras from "./BoardUI/BackgammonExtras";
 import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { useSocketOn, socketEmit } from "../api";
 import { Player, RoomStep } from "../util";
-import { getPossibleMoves } from "../game";
+import { possiblePipsFrom } from "../game";
 
 const BoardContainer = styled.div`
     position: relative;
@@ -22,7 +22,7 @@ function Game({ player, roomStep, startingRolls, variant }) {
     const applyTurn = () => socketEmit("game/apply-turn");
     const undoTurn = () => socketEmit("game/undo");
 
-    const getPossiblePips = (from) => getPossibleMoves(from, boardState, variant);
+    const getPossiblePips = (from) => possiblePipsFrom(from, boardState, variant);
 
     return boardState === null ? null : (
         <>

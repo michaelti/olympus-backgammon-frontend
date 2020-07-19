@@ -49,7 +49,7 @@ function isMoveValid(from, to, board, variant) {
     else return false;
 }
 
-export const getPossibleMoves = (from, board, variant) => {
+export const possiblePipsFrom = (from, board, variant) => {
     let possiblePips = new Set();
 
     for (const die of board.dice) {
