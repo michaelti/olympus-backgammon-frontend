@@ -5,7 +5,7 @@ import Bar from "./Bar";
 import BackgroundSVG from "./svg/background.svg";
 import { Player } from "../../util.js";
 
-function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePips, }) {
+function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePips }) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
     const [highlightedPips, setHighlightedPips] = useState(null);
