@@ -1,9 +1,10 @@
-import { Player, Variant } from "./util";
+import { Player } from "./util";
 
-const clamp = (to) => (to < 0 ? 0 : to > 25 ? 25 : to);
-const range = (start, end, length = end - start + 1) => Array.from({ length }, (_, i) => start + i);
+export const clamp = (to) => (to < 0 ? 0 : to > 25 ? 25 : to);
+export const range = (start, end, length = end - start + 1) =>
+    Array.from({ length }, (_, i) => start + i);
 
-function isMoveValidPlakoto(from, to, board) {
+export function isMoveValidPlakoto(from, to, board) {
     to = clamp(to);
     if (board.pips[from].top !== board.turn) return false;
 
@@ -41,23 +42,3 @@ function isMoveValidPlakoto(from, to, board) {
 
     return true;
 }
-
-function isMoveValid(from, to, board, variant) {
-    if (variant === Variant.portes) return false;
-    if (variant === Variant.plakoto) return isMoveValidPlakoto(from, to, board);
-    if (variant === Variant.fevga) return false;
-    else return false;
-}
-
-export const possiblePipsFrom = (from, board, variant) => {
-    let possiblePips = new Set();
-
-    for (const die of board.dice) {
-        const to = clamp(from + die * board.turn);
-        if (isMoveValid(from, to, board, variant)) {
-            possiblePips.add(to);
-        }
-    }
-
-    return possiblePips;
-};
