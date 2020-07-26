@@ -5,6 +5,9 @@ export const range = (start, end, length = end - start + 1) =>
     Array.from({ length }, (_, i) => start + i);
 
 export const isMoveValid = {
+    [Variant.portes]: function (from, to, board) {
+        return false;
+    },
     [Variant.plakoto]: function (from, to, board) {
         to = clamp(to);
         if (board.pips[from].top !== board.turn) return false;
@@ -43,5 +46,8 @@ export const isMoveValid = {
         }
 
         return true;
+    },
+    [Variant.fevga]: function (from, to, board) {
+        return false;
     },
 };

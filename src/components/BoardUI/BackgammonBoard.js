@@ -11,10 +11,8 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
     const [highlightedPips, setHighlightedPips] = useState(null);
 
     const handleClickPip = (clickedPip) => {
-        const clickedPipObj = pips[clickedPip];
-
         if (!moving) {
-            if (clickedPipObj.size > 0) {
+            if (pips[clickedPip].size > 0) {
                 // Start a move
                 setMoving(true);
                 setSourcePip(clickedPip);
@@ -33,6 +31,23 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
         if (moving) {
             if (clickedOff === Player.white) doMove(sourcePip, 25);
             if (clickedOff === Player.black) doMove(sourcePip, 0);
+            setHighlightedPips(null);
+            setSourcePip(undefined);
+            setMoving(false);
+        }
+    };
+
+    const handleClickBar = (clickedBar) => {
+        if (!moving) {
+            if (bar[clickedBar] > 0) {
+                let from;
+                if (clickedBar === Player.white) from = 0;
+                if (clickedBar === Player.black) from = 25;
+                setMoving(true);
+                setSourcePip(from);
+                setHighlightedPips(getPossiblePips(from));
+            }
+        } else {
             setHighlightedPips(null);
             setSourcePip(undefined);
             setMoving(false);
@@ -61,8 +76,21 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
                 highlighted={highlightedPips?.has(25)}
             />
 
-            <Bar posX={700} invertY count={bar[Player.white]} color={Player.white} />
-            <Bar posX={700} count={bar[Player.black]} color={Player.black} />
+            <Bar
+                posX={700}
+                invertY
+                count={bar[Player.white]}
+                color={Player.white}
+                onClick={() => handleClickBar(Player.white)}
+                active={sourcePip === 0}
+            />
+            <Bar
+                posX={700}
+                count={bar[Player.black]}
+                color={Player.black}
+                onClick={() => handleClickBar(Player.black)}
+                active={sourcePip === 25}
+            />
 
             {pips.map((pip, i) => {
                 if (i === 0) return null;
