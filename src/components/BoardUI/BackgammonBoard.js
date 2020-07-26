@@ -39,13 +39,10 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
 
     const handleClickBar = (clickedBar) => {
         if (!moving) {
-            if (bar[clickedBar] > 0) {
-                let from;
-                if (clickedBar === Player.white) from = 0;
-                if (clickedBar === Player.black) from = 25;
+            if (pips[clickedBar].size > 0) {
                 setMoving(true);
-                setSourcePip(from);
-                setHighlightedPips(getPossiblePips(from));
+                setSourcePip(clickedBar);
+                setHighlightedPips(getPossiblePips(clickedBar));
             }
         } else {
             setHighlightedPips(null);
@@ -79,21 +76,21 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
             <Bar
                 posX={700}
                 invertY
-                count={bar[Player.white]}
+                count={pips[0].size}
                 color={Player.white}
-                onClick={() => handleClickBar(Player.white)}
+                onClick={() => handleClickBar(0)}
                 active={sourcePip === 0}
             />
             <Bar
                 posX={700}
-                count={bar[Player.black]}
+                count={pips[25].size}
                 color={Player.black}
-                onClick={() => handleClickBar(Player.black)}
+                onClick={() => handleClickBar(25)}
                 active={sourcePip === 25}
             />
 
             {pips.map((pip, i) => {
-                if (i === 0) return null;
+                if (i === 0 || i === 25) return null;
 
                 const pipQuadrant = Math.ceil((i / 24) * 4);
                 let [posX, invertY] = [0, false];
