@@ -10,20 +10,24 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
     const [sourcePip, setSourcePip] = useState(undefined);
     const [highlightedPips, setHighlightedPips] = useState(null);
 
+    const clearMove = () => {
+        setHighlightedPips(null);
+        setSourcePip(undefined);
+        setMoving(false);
+    };
+
     const handleClickPip = (clickedPip) => {
         if (!moving) {
+            // We're not moving; start a move
             if (pips[clickedPip].size > 0) {
-                // Start a move
                 setMoving(true);
                 setSourcePip(clickedPip);
                 setHighlightedPips(getPossiblePips(clickedPip));
             }
-        } else if (sourcePip !== clickedPip) {
-            // Complete the started move
-            doMove(sourcePip, clickedPip);
-            setHighlightedPips(null);
-            setSourcePip(undefined);
-            setMoving(false);
+        } else {
+            // We are moving; complete a move (if it's not to the bar)
+            if (clickedPip !== 0 && clickedPip !== 25) doMove(sourcePip, clickedPip);
+            clearMove();
         }
     };
 
@@ -31,23 +35,7 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
         if (moving) {
             if (clickedOff === Player.white) doMove(sourcePip, 25);
             if (clickedOff === Player.black) doMove(sourcePip, 0);
-            setHighlightedPips(null);
-            setSourcePip(undefined);
-            setMoving(false);
-        }
-    };
-
-    const handleClickBar = (clickedBar) => {
-        if (!moving) {
-            if (pips[clickedBar].size > 0) {
-                setMoving(true);
-                setSourcePip(clickedBar);
-                setHighlightedPips(getPossiblePips(clickedBar));
-            }
-        } else {
-            setHighlightedPips(null);
-            setSourcePip(undefined);
-            setMoving(false);
+            clearMove();
         }
     };
 
@@ -76,16 +64,16 @@ function BackgammonBoard({ boardState: { pips, off, bar }, doMove, getPossiblePi
             <Bar
                 posX={700}
                 invertY
-                count={pips[0].size}
+                count={pips[0].size /* Special bar pip */}
                 color={Player.white}
-                onClick={() => handleClickBar(0)}
+                onClick={() => handleClickPip(0)}
                 active={sourcePip === 0}
             />
             <Bar
                 posX={700}
-                count={pips[25].size}
+                count={pips[25].size /* Special bar pip */}
                 color={Player.black}
-                onClick={() => handleClickBar(25)}
+                onClick={() => handleClickPip(25)}
                 active={sourcePip === 25}
             />
 
