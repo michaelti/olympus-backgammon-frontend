@@ -47,8 +47,7 @@ function RoomSetup({ show }) {
                         onClick={() => setSelectedVariant(Variant.fevga)}
                         active={selectedVariant === Variant.fevga}
                         tag="button"
-                        action
-                        disabled>
+                        action>
                         {Variant.properties[Variant.fevga].name}
                     </ListGroupItem>
                 </ListGroup>
