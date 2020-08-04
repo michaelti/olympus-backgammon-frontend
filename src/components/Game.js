@@ -4,7 +4,7 @@ import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
 import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { socketEmit } from "../api";
-import { Player, RoomStep } from "../util";
+import { Player, RoomStep, Variant } from "../util";
 import { clamp, isMoveValid } from "../game";
 
 const BoardContainer = styled.div`
