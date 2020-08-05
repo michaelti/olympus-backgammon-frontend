@@ -38,7 +38,7 @@ function Room({ setRoomName }) {
             <Game
                 player={player}
                 roomStep={roomState.step}
-                startingRolls={roomState.startingRolls}
+                startingRolls={roomState.dice}
                 variant={roomState.variant}
                 boardState={roomState.board || null}
             />
