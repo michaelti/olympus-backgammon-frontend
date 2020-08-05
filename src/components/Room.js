@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import { useSocketOn, socketEmit } from "../api";
 import { Container } from "reactstrap";
@@ -9,8 +9,11 @@ import Game from "./Game";
 function Room({ setRoomName }) {
     const { roomName } = useParams();
     const [player, setPlayer] = useState(undefined);
-    const [roomState, setRoomState] = useState({});
     const [failedJoin, setFailedJoin] = useState(false);
+    const [roomState, updateRoomState] = useReducer(
+        (state, payload) => ({ ...state, ...payload }),
+        {}
+    );
 
     useEffect(() => {
         socketEmit("event/join-room", roomName, (acknowledgement) => {
@@ -24,7 +27,7 @@ function Room({ setRoomName }) {
     }, [roomName, setRoomName]);
 
     useSocketOn("room/update-room", (room) => {
-        setRoomState(room);
+        updateRoomState(room);
     });
 
     if (failedJoin) return <Redirect to="/" />;
@@ -37,6 +40,7 @@ function Room({ setRoomName }) {
                 roomStep={roomState.step}
                 startingRolls={roomState.startingRolls}
                 variant={roomState.variant}
+                boardState={roomState.board || null}
             />
         </Container>
     );
