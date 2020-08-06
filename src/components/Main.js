@@ -1,36 +1,15 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { Container, Button, Input, Form, InputGroup, InputGroupAddon } from "reactstrap";
+import { Container, Button } from "reactstrap";
 import { socketEmit } from "../api";
 
 function Main({ setRoomName }) {
-    const [joinName, setJoinName] = useState("");
     const [shouldRedirectTo, setShouldRedirectTo] = useState(null);
-
-    const handleChange = (event) => {
-        setJoinName(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        joinRoom(joinName);
-    };
 
     const startRoom = () => {
         socketEmit("event/start-room", (acknowledgement) => {
             if (!acknowledgement.ok) {
                 console.log(`Failed to start room "${acknowledgement.roomName}".`);
-            } else {
-                setRoomName(acknowledgement.roomName);
-                setShouldRedirectTo(acknowledgement.roomName);
-            }
-        });
-    };
-
-    const joinRoom = (roomName) => {
-        socketEmit("event/join-room", roomName, (acknowledgement) => {
-            if (!acknowledgement.ok) {
-                console.log(`Failed to join room "${acknowledgement.roomName}".`);
             } else {
                 setRoomName(acknowledgement.roomName);
                 setShouldRedirectTo(acknowledgement.roomName);
@@ -55,23 +34,8 @@ function Main({ setRoomName }) {
             <hr className="my-5" />
 
             <p className="pb-3">
-                To join a game that your friend started, click the link they sent you or enter the
-                code below:
+                To join a game that your friend started, click the link that they sent you.
             </p>
-
-            <Form inline onSubmit={handleSubmit}>
-                <InputGroup>
-                    <Input
-                        bsSize="lg"
-                        type="text"
-                        placeholder="Ex. g2Jk3"
-                        onChange={handleChange}
-                    />
-                    <InputGroupAddon addonType="append">
-                        <Button size="lg">Join game</Button>
-                    </InputGroupAddon>
-                </InputGroup>
-            </Form>
 
             {shouldRedirectTo === null ? null : <Redirect to={"/room/" + shouldRedirectTo} />}
         </Container>
