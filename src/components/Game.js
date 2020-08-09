@@ -53,6 +53,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState }) {
                     isTurn={!process.env.REACT_APP_GAMEDEV ? player === boardState.turn : true}
                     doMove={doMove}
                     getPossiblePips={getPossiblePips}
+                    flipOffWhite={variant === Variant.fevga}
                 />
                 {roomStep === RoomStep.startingRoll ? (
                     <BackgammonOverlay
