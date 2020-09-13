@@ -4,6 +4,7 @@ import CheckerB from "./svg/checker-b.svg";
 import { Player } from "../../util.js";
 import useMeasure from "react-use-measure";
 import styled from "styled-components";
+import { useTransition, animated } from "react-spring";
 
 const Stack = styled.div`
     height: 100%;
@@ -12,9 +13,9 @@ const Stack = styled.div`
 
     > img {
         width: 100%;
-        margin-top: ${(props) => !props.reverse && props.squishAmount + "px"};
+        /* margin-top: ${(props) => !props.reverse && props.squishAmount + "px"};
         margin-bottom: ${(props) => props.reverse && props.squishAmount + "px"};
-        transition: margin-top 0.15s ease, margin-bottom 0.15s ease;
+        transition: margin-top 0.15s ease, margin-bottom 0.15s ease; */
 
         &:first-child {
             margin-top: 0;
@@ -36,17 +37,26 @@ function CheckerStack({ size, top, bot, reverse }) {
     const overflow = checkers.length * width - height;
     const squishAmount = overflow > 0 ? -(overflow / (checkers.length - 1)) : 0;
 
+    /** */
+
+    const transitions = useTransition(checkers, (_item, i) => i, {
+        from: { transform: "translate(0,0)" },
+        enter: { transform: "translate(0,0)" },
+        leave: { transform: "translate(0,0)" },
+        update: { [reverse ? "marginTop" : "marginBottom"]: squishAmount },
+        unique: true,
+        reset: true,
+    });
     return (
         <Stack ref={divRef} reverse={reverse} squishAmount={squishAmount}>
-            {checkers.map((checker, i) => {
-                return (
-                    <img
-                        key={i}
-                        src={checker === Player.white ? CheckerW : CheckerB}
-                        alt={Player.properties[checker].colorName}
-                    />
-                );
-            })}
+            {transitions.map(({ item, props, key }) => (
+                <animated.img
+                    key={key}
+                    src={item === Player.white ? CheckerW : CheckerB}
+                    alt={Player.properties[item].colorName}
+                    style={props}
+                />
+            ))}
         </Stack>
     );
 }
