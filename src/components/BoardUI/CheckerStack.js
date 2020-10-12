@@ -3,6 +3,7 @@ import CheckerW from "./svg/checker-w.svg";
 import CheckerB from "./svg/checker-b.svg";
 import { Player } from "../../util.js";
 import useMeasure from "react-use-measure";
+import { ResizeObserver } from "@juggle/resize-observer";
 import styled from "styled-components";
 import { useTransition, animated } from "react-spring";
 import { positions } from "./domPos";
@@ -30,7 +31,7 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
         checkers[0] = bot;
     }
 
-    const [divRef, divBounds] = useMeasure({ scroll: true });
+    const [divRef, divBounds] = useMeasure({ scroll: true, polyfill: ResizeObserver });
 
     const checkerSize = divBounds.width;
     const overflow = checkers.length * checkerSize - divBounds.height;
