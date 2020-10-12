@@ -69,9 +69,6 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
             zIndex: 0,
         }),
         leave: { visibility: "hidden" },
-        config: {
-            friction: 1000,
-        },
     });
 
     return (
