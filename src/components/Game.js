@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BackgammonBoard from "./BoardUI/BackgammonBoard2";
+import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
 import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
 import { socketEmit } from "../api";
