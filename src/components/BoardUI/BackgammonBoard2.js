@@ -78,7 +78,7 @@ const Off = styled.div`
 `;
 
 function BackgammonBoard2({
-    boardState: { pips, off, turn },
+    boardState: { pips, off, turn, recentMove },
     isTurn,
     doMove,
     getPossiblePips,
@@ -142,6 +142,8 @@ function BackgammonBoard2({
                                 top={pip.top}
                                 bot={pip.bot}
                                 reverse={i > 12}
+                                recentMove={recentMove}
+                                pipNum={i}
                             />
                         </Bar>
                     );
@@ -159,6 +161,8 @@ function BackgammonBoard2({
                                 top={pip.top}
                                 bot={pip.bot}
                                 reverse={i > 12}
+                                recentMove={recentMove}
+                                pipNum={i}
                             />
                         </Bar>
                     );
@@ -177,6 +181,8 @@ function BackgammonBoard2({
                             top={pip.top}
                             bot={pip.bot}
                             reverse={i <= 12}
+                            recentMove={recentMove}
+                            pipNum={i}
                         />
                     </Pip>
                 );
@@ -192,6 +198,8 @@ function BackgammonBoard2({
                     top={Player.white}
                     bot={Player.white}
                     reverse={false}
+                    recentMove={recentMove}
+                    pipNum={25}
                 />
             </Off>
             <Off
@@ -204,6 +212,8 @@ function BackgammonBoard2({
                     top={Player.black}
                     bot={Player.black}
                     reverse={true}
+                    recentMove={recentMove}
+                    pipNum={0}
                 />
             </Off>
             {/* <!-- --> */}
