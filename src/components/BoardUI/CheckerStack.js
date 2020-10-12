@@ -25,17 +25,10 @@ const Stack = styled.div`
 `;
 
 function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
-    let checkers = Array(size);
-
-    // if (checkers.length > 0) {
-    //     checkers.fill(top);
-    //     checkers[0] = bot;
-    // }
-
-    for (let i = 0; i < checkers.length; i++) {
-        checkers[i] = { color: top, index: i };
-        if (i === 0) checkers[i].color = bot;
-    }
+    const checkers = Array.from({ length: size }, (_item, i) => ({
+        color: i === 0 ? bot : top,
+        index: i,
+    }));
 
     const [divRef, divBounds] = useMeasure({ scroll: true, polyfill: ResizeObserver });
 
