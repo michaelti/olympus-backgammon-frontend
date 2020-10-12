@@ -27,9 +27,14 @@ const Stack = styled.div`
 function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
     let checkers = Array(size);
 
-    if (checkers.length > 0) {
-        checkers.fill(top);
-        checkers[0] = bot;
+    // if (checkers.length > 0) {
+    //     checkers.fill(top);
+    //     checkers[0] = bot;
+    // }
+
+    for (let i = 0; i < checkers.length; i++) {
+        checkers[i] = { color: top, index: i };
+        if (i === 0) checkers[i].color = bot;
     }
 
     const [divRef, divBounds] = useMeasure({ scroll: true, polyfill: ResizeObserver });
@@ -39,7 +44,7 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
     const squishAmount = overflow > 0 ? overflow / (checkers.length - 1) : 0;
 
     /** */
-    const transitions = useTransition(checkers, (item, i) => `${item}${i}`, {
+    const transitions = useTransition(checkers, (item) => `${item.color}${item.index}`, {
         from: () => {
             if (!(recentMove && recentMove.to === pipNum && positions?.[recentMove.from])) return;
 
@@ -48,11 +53,6 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
             let toY = reverse
                 ? divBounds.bottom - checkerSize - (checkers.length - 1) * checkerSize
                 : divBounds.top + (checkers.length - 1) * checkerSize;
-
-            if (overflow > 0)
-                toY = reverse
-                    ? divBounds.top - checkerSize + overflow / checkers.length
-                    : divBounds.bottom - overflow / checkers.length;
 
             const translateX = from.x - toX;
             const translateY = from.y - toY;
@@ -63,9 +63,15 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
                 zIndex: 1,
             };
         },
-        enter: { top: 0, left: 0, zIndex: 0 },
+        update: (item) => ({
+            top: reverse ? squishAmount * item.index : -squishAmount * item.index,
+            left: 0,
+            zIndex: 0,
+        }),
         leave: { visibility: "hidden" },
-        update: { [reverse ? "marginTop" : "marginBottom"]: -squishAmount },
+        config: {
+            friction: 1000,
+        },
     });
 
     return (
@@ -73,8 +79,8 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
             {transitions.map(({ item, props, key }) => (
                 <animated.img
                     key={key}
-                    src={item === Player.white ? CheckerW : CheckerB}
-                    alt={Player.properties[item].colorName}
+                    src={item.color === Player.white ? CheckerW : CheckerB}
+                    alt={Player.properties[item.color].colorName}
                     style={props}
                     ref={(el) => (positions[pipNum] = el)}
                 />
