@@ -16,11 +16,6 @@ const Stack = styled.div`
     > img {
         position: relative;
         width: 100%;
-        /* 
-        &:first-child {
-            margin-top: 0;
-            margin-bottom: 0;
-        } */
     }
 `;
 
