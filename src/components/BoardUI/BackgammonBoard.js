@@ -15,21 +15,11 @@ const Board = styled.div`
         "o-tl p13 p14 p15 p16 p17 p18 b-t p19 p20 p21 p22 p23 p24 o-tr"
         "ui ui ui ui ui ui ui ui ui ui ui ui ui ui ui"
         "o-bl p12 p11 p10 p9 p8 p7 b-b p6 p5 p4 p3 p2 p1 o-br";
-
-    .off {
-        background: #745138;
-    }
-
-    .bar {
-        background: #c49158;
-    }
-
-    .pip {
-        background: #f7d086;
-    }
 `;
 
 const Pip = styled.div`
+    background-color: #f7d086;
+
     ${(props) =>
         props.moveable &&
         css`
@@ -48,10 +38,12 @@ const Pip = styled.div`
                 border-radius: 50%;
                 box-shadow: 0 0 0 5px gray;
             }
-        `}
+        `};
 `;
 
 const Bar = styled.div`
+    background-color: #c49158;
+
     ${(props) =>
         props.moveable &&
         css`
@@ -69,12 +61,14 @@ const Bar = styled.div`
 `;
 
 const Off = styled.div`
+    background-color: #745138;
+
     ${(props) =>
         props.highlighted &&
         css`
             cursor: pointer;
             background-color: gray !important;
-        `}
+        `};
 `;
 
 function BackgammonBoard2({
@@ -132,7 +126,6 @@ function BackgammonBoard2({
                     return (
                         <Bar
                             key={i}
-                            className="bar"
                             onClick={() => handleClickPip(i)}
                             active={i === sourcePip}
                             moveable={isTurn && pip.top === turn && pip.size > 0}
@@ -151,7 +144,6 @@ function BackgammonBoard2({
                     return (
                         <Bar
                             key={i}
-                            className="bar"
                             onClick={() => handleClickPip(i)}
                             active={i === sourcePip}
                             moveable={isTurn && pip.top === turn && pip.size > 0}
@@ -170,7 +162,6 @@ function BackgammonBoard2({
                 return (
                     <Pip
                         key={i}
-                        className="pip"
                         onClick={() => handleClickPip(i)}
                         active={i === sourcePip}
                         highlighted={highlightedPips?.has(i)}
@@ -189,7 +180,6 @@ function BackgammonBoard2({
             })}
             {/* <!-- --> */}
             <Off
-                className="off"
                 style={{ gridArea: flipOffWhite ? "o-tl" : "o-tr" }}
                 onClick={() => handleClickOff(Player.white)}
                 highlighted={highlightedPips?.has(25)}>
@@ -203,7 +193,6 @@ function BackgammonBoard2({
                 />
             </Off>
             <Off
-                className="off"
                 style={{ gridArea: "o-br" }}
                 onClick={() => handleClickOff(Player.black)}
                 highlighted={highlightedPips?.has(0)}>
@@ -217,8 +206,8 @@ function BackgammonBoard2({
                 />
             </Off>
             {/* <!-- --> */}
-            <Off className="off" style={{ gridArea: flipOffWhite ? "o-tr" : "o-tl" }}></Off>
-            <Off className="off" style={{ gridArea: "o-bl" }}></Off>
+            <Off style={{ gridArea: flipOffWhite ? "o-tr" : "o-tl" }}></Off>
+            <Off style={{ gridArea: "o-bl" }}></Off>
             {/* <!-- --> */}
             <div style={{ gridArea: "ui" }}></div>
         </Board>
