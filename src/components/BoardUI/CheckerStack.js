@@ -14,6 +14,7 @@ const Stack = styled.div`
     flex-direction: ${(props) => (props.reverse ? "column-reverse" : "column")};
 
     > img {
+        position: relative;
         width: 100%;
         /* 
         &:first-child {
@@ -57,11 +58,12 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
             const translateY = from.y - toY;
 
             return {
-                transform: `translateX(${translateX}px) translateY(${translateY}px)`,
+                top: translateY,
+                left: translateX,
                 zIndex: 1,
             };
         },
-        enter: { transform: "translateX(0px) translateY(0px)", zIndex: 0 },
+        enter: { top: 0, left: 0, zIndex: 0 },
         leave: { visibility: "hidden" },
         update: { [reverse ? "marginTop" : "marginBottom"]: -squishAmount },
     });
