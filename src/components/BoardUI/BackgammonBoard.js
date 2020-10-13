@@ -34,8 +34,7 @@ const Pip = styled.div`
     ${(props) =>
         props.active &&
         css`
-            img:last-child {
-                border-radius: 50%;
+            div:last-child > img {
                 box-shadow: 0 0 0 5px gray;
             }
         `};
@@ -53,8 +52,7 @@ const Bar = styled.div`
     ${(props) =>
         props.active &&
         css`
-            img:last-child {
-                border-radius: 50%;
+            div:last-child > img {
                 box-shadow: 0 0 0 5px gray;
             }
         `}

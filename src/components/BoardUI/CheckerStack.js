@@ -13,9 +13,13 @@ const Stack = styled.div`
     display: flex;
     flex-direction: ${(props) => (props.reverse ? "column-reverse" : "column")};
 
-    > img {
+    div {
         position: relative;
-        width: 100%;
+        img {
+            display: block;
+            border-radius: 50%;
+            width: 100%;
+        }
     }
 `;
 
@@ -37,6 +41,7 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
             if (!(recentMove && recentMove.to === pipNum && positions?.[recentMove.from])) return;
 
             const from = positions[recentMove.from].getBoundingClientRect();
+
             const toX = divBounds.x;
             let toY = reverse
                 ? divBounds.bottom - checkerSize - (checkers.length - 1) * checkerSize
@@ -56,19 +61,20 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
             left: 0,
             zIndex: 0,
         }),
+        // Unmount instantly:
         leave: { visibility: "hidden" },
+        config: (_key, state) => state === "leave" && { duration: 0 },
     });
 
     return (
         <Stack ref={divRef} reverse={reverse}>
             {transitions.map(({ item, props, key }) => (
-                <animated.img
-                    key={key}
-                    src={item.color === Player.white ? CheckerW : CheckerB}
-                    alt={Player.properties[item.color].colorName}
-                    style={props}
-                    ref={(el) => (positions[pipNum] = el)}
-                />
+                <animated.div key={key} style={props} ref={(el) => (positions[pipNum] = el)}>
+                    <img
+                        src={item.color === Player.white ? CheckerW : CheckerB}
+                        alt={Player.properties[item.color].colorName}
+                    />
+                </animated.div>
             ))}
         </Stack>
     );
