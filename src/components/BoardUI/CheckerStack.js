@@ -6,7 +6,7 @@ import useMeasure from "react-use-measure";
 import { ResizeObserver } from "@juggle/resize-observer";
 import styled from "styled-components";
 import { useTransition, animated } from "react-spring";
-import { positions } from "./domPos";
+import domRefs from "./domRefs";
 
 const Stack = styled.div`
     height: 100%;
@@ -38,9 +38,9 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
     /** */
     const transitions = useTransition(checkers, (item) => `${item.color}${item.index}`, {
         from: () => {
-            if (!(recentMove && recentMove.to === pipNum && positions?.[recentMove.from])) return;
+            if (!(recentMove && recentMove.to === pipNum && domRefs?.[recentMove.from])) return;
 
-            const from = positions[recentMove.from].getBoundingClientRect();
+            const from = domRefs[recentMove.from].getBoundingClientRect();
 
             const toX = divBounds.x;
             let toY = reverse
@@ -69,7 +69,7 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
     return (
         <Stack ref={divRef} reverse={reverse}>
             {transitions.map(({ item, props, key }) => (
-                <animated.div key={key} style={props} ref={(el) => (positions[pipNum] = el)}>
+                <animated.div key={key} style={props} ref={(el) => (domRefs[pipNum] = el)}>
                     <img
                         src={item.color === Player.white ? CheckerW : CheckerB}
                         alt={Player.properties[item.color].colorName}
