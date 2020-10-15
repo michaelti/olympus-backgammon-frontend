@@ -38,7 +38,9 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
     /** */
     const transitions = useTransition(checkers, (item) => `${item.color}${item.index}`, {
         from: () => {
-            if (!(recentMove && recentMove.to === pipNum && domRefs?.[recentMove.from])) return;
+            if (!recentMove) return;
+            if (recentMove.to !== pipNum) return;
+            if (!domRefs?.[recentMove.from]) return;
 
             const from = domRefs[recentMove.from].getBoundingClientRect();
 
