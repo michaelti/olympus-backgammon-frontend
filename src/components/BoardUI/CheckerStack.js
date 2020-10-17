@@ -35,14 +35,17 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
     const overflow = checkers.length * checkerSize - divBounds.height;
     const squishAmount = overflow > 0 ? overflow / (checkers.length - 1) : 0;
 
-    /** */
-    const transitions = useTransition(checkers, (item) => `${item.color}${item.index}`, {
-        from: () => {
-            if (!recentMove) return;
-            if (recentMove.to !== pipNum) return;
-            if (!domRefs?.[recentMove.from]) return;
+    let animateFrom = null;
+    if (recentMove.to === pipNum) animateFrom = recentMove.from;
+    else if (recentMove.subMove?.to === pipNum) animateFrom = recentMove.subMove.from;
 
-            const from = domRefs[recentMove.from].getBoundingClientRect();
+    /** */
+    const transitions = useTransition(checkers, (item) => `${item.index}${item.color}`, {
+        from: (item) => {
+            if (animateFrom === null) return;
+
+            if (!domRefs[animateFrom][item.color]) return;
+            const from = domRefs[animateFrom][item.color].getBoundingClientRect();
 
             const toX = divBounds.x;
             let toY = reverse
@@ -71,7 +74,10 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
     return (
         <Stack ref={divRef} reverse={reverse}>
             {transitions.map(({ item, props, key }) => (
-                <animated.div key={key} style={props} ref={(el) => (domRefs[pipNum] = el)}>
+                <animated.div
+                    key={key}
+                    style={props}
+                    ref={(el) => (domRefs[pipNum][item.color] = el)}>
                     <img
                         src={item.color === Player.white ? CheckerW : CheckerB}
                         alt={Player.properties[item.color].colorName}

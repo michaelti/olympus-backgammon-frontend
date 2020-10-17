@@ -120,32 +120,14 @@ function BackgammonBoard2({
     return (
         <Board>
             {pips.map((pip, i) => {
-                if (i === 0)
+                if (i === 0 || i === 25)
                     return (
                         <Bar
                             key={i}
                             onClick={() => handleClickPip(i)}
                             active={i === sourcePip}
                             moveable={isTurn && pip.top === turn && pip.size > 0}
-                            style={{ gridArea: "b-b" }}>
-                            <CheckerStack
-                                size={pip.size}
-                                top={pip.top}
-                                bot={pip.bot}
-                                reverse={i > 12}
-                                recentMove={recentMove}
-                                pipNum={i}
-                            />
-                        </Bar>
-                    );
-                if (i === 25)
-                    return (
-                        <Bar
-                            key={i}
-                            onClick={() => handleClickPip(i)}
-                            active={i === sourcePip}
-                            moveable={isTurn && pip.top === turn && pip.size > 0}
-                            style={{ gridArea: "b-t" }}>
+                            style={{ gridArea: i === 0 ? "b-b" : "b-t" }}>
                             <CheckerStack
                                 size={pip.size}
                                 top={pip.top}
