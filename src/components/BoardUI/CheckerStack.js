@@ -36,13 +36,13 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove, isSource })
             if (!domRefs[animateFrom][item.color]) return;
             const from = domRefs[animateFrom][item.color].getBoundingClientRect();
 
-            const toX = divBounds.x;
-            let toY = reverse
+            const toLeft = divBounds.left;
+            let toTop = reverse
                 ? divBounds.bottom - checkerSize - (checkers.length - 1) * checkerSize
                 : divBounds.top + (checkers.length - 1) * checkerSize;
 
-            const translateX = from.x - toX;
-            const translateY = from.y - toY;
+            const translateX = from.left - toLeft;
+            const translateY = from.top - toTop;
 
             return {
                 top: translateY,
