@@ -42,7 +42,7 @@ const Off = styled(PipLike)`
 
 const UI = styled(PipLike)``;
 
-function BackgammonBoard2({
+function BackgammonBoard({
     boardState: { pips, off, turn, recentMove },
     isTurn,
     doMove,
@@ -167,4 +167,4 @@ function BackgammonBoard2({
     );
 }
 
-export default BackgammonBoard2;
+export default BackgammonBoard;
