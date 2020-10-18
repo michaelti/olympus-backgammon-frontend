@@ -20,8 +20,8 @@ const Board = styled.div`
 const PipLike = styled.div`
     grid-area: ${(props) => props.gridArea};
 
-    cursor: ${(props) => (props.moveable || props.highlighted) && "pointer"};
-    background-color: ${(props) => props.highlighted && "gray"} !important;
+    cursor: ${(props) => (props.canMoveFrom || props.canMoveTo) && "pointer"};
+    background-color: ${(props) => props.canMoveTo && "gray"} !important;
 `;
 
 const Pip = styled(PipLike)`
@@ -94,7 +94,7 @@ function BackgammonBoard({
                         <Bar
                             key={i}
                             onClick={() => handleClickPip(i)}
-                            moveable={isTurn && pip.top === turn && pip.size > 0}
+                            canMoveFrom={isTurn && pip.top === turn && pip.size > 0}
                             gridArea={i === 0 ? "bot-mid" : "top-mid"}>
                             <CheckerStack
                                 size={pip.size}
@@ -112,8 +112,8 @@ function BackgammonBoard({
                     <Pip
                         key={i}
                         onClick={() => handleClickPip(i)}
-                        highlighted={highlightedPips?.has(i)}
-                        moveable={isTurn && pip.top === turn && pip.size > 0}
+                        canMoveTo={highlightedPips?.has(i)}
+                        canMoveFrom={isTurn && pip.top === turn && pip.size > 0}
                         gridArea={"p" + i}>
                         <CheckerStack
                             size={pip.size}
@@ -131,7 +131,7 @@ function BackgammonBoard({
             <Off
                 gridArea={flipOffWhite ? "top-left" : "top-right"}
                 onClick={() => handleClickOff(Player.white)}
-                highlighted={highlightedPips?.has(25)}>
+                canMoveTo={highlightedPips?.has(25)}>
                 <CheckerStack
                     size={off[Player.white]}
                     top={Player.white}
@@ -144,7 +144,7 @@ function BackgammonBoard({
             <Off
                 gridArea="bot-right"
                 onClick={() => handleClickOff(Player.black)}
-                highlighted={highlightedPips?.has(0)}>
+                canMoveTo={highlightedPips?.has(0)}>
                 <CheckerStack
                     size={off[Player.black]}
                     top={Player.black}
