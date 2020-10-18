@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Player } from "../../util.js";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import CheckerStack from "./CheckerStack";
 
 const Board = styled.div`
@@ -17,64 +17,30 @@ const Board = styled.div`
         "bot-left p12 p11 p10 p9 p8 p7 bot-mid p6 p5 p4 p3 p2 p1 bot-right";
 `;
 
-const Pip = styled.div`
+const PipLike = styled.div`
+    grid-area: ${(props) => props.gridArea};
+
+    cursor: ${(props) => (props.moveable || props.highlighted) && "pointer"};
+    background-color: ${(props) => props.highlighted && "gray"} !important;
+
+    div:last-child > img {
+        box-shadow: ${(props) => props.active && "0 0 0 5px gray"};
+    }
+`;
+
+const Pip = styled(PipLike)`
     background-color: #f7d086;
-    grid-area: ${(props) => props.gridArea};
-
-    ${(props) =>
-        props.moveable &&
-        css`
-            cursor: pointer;
-        `}
-    ${(props) =>
-        props.highlighted &&
-        css`
-            cursor: pointer;
-            background-color: gray !important;
-        `}
-    ${(props) =>
-        props.active &&
-        css`
-            div:last-child > img {
-                box-shadow: 0 0 0 5px gray;
-            }
-        `};
 `;
 
-const Bar = styled.div`
+const Bar = styled(PipLike)`
     background-color: #c49158;
-    grid-area: ${(props) => props.gridArea};
-
-    ${(props) =>
-        props.moveable &&
-        css`
-            cursor: pointer;
-        `}
-
-    ${(props) =>
-        props.active &&
-        css`
-            div:last-child > img {
-                box-shadow: 0 0 0 5px gray;
-            }
-        `}
 `;
 
-const Off = styled.div`
+const Off = styled(PipLike)`
     background-color: #745138;
-    grid-area: ${(props) => props.gridArea};
-
-    ${(props) =>
-        props.highlighted &&
-        css`
-            cursor: pointer;
-            background-color: gray !important;
-        `};
 `;
 
-const UI = styled.div`
-    grid-area: ${(props) => props.gridArea};
-`;
+const UI = styled(PipLike)``;
 
 function BackgammonBoard2({
     boardState: { pips, off, turn, recentMove },
