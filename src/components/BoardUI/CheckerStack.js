@@ -12,7 +12,7 @@ const Stack = styled.div`
     flex-direction: ${(props) => (props.reverse ? "column-reverse" : "column")};
 `;
 
-function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
+function CheckerStack({ size, top, bot, reverse, pipNum, recentMove, isSource }) {
     const checkers = Array.from({ length: size }, (_item, i) => ({
         color: i === 0 ? bot : top,
         index: i,
@@ -64,12 +64,12 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
 
     return (
         <Stack ref={divRef} reverse={reverse}>
-            {transitions.map(({ item, props, key }) => (
+            {transitions.map(({ item, props, key }, i) => (
                 <animated.div
                     key={key}
                     style={props}
                     ref={(el) => (domRefs[pipNum][item.color] = el)}>
-                    <Checker color={item.color} />
+                    <Checker color={item.color} glow={isSource && i === checkers.length - 1} />
                 </animated.div>
             ))}
         </Stack>

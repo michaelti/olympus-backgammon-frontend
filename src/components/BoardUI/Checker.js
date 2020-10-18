@@ -8,13 +8,16 @@ const Img = styled.img`
     display: block;
     border-radius: 50%;
     width: 100%;
+
+    box-shadow: ${(props) => props.glow && "0 0 0 5px gray"};
 `;
 
-function Checker({ color }) {
+function Checker({ color, glow }) {
     return (
         <Img
             src={color === Player.white ? CheckerW : CheckerB}
             alt={Player.properties[color].colorName + " checker"}
+            glow={glow}
         />
     );
 }

@@ -22,10 +22,6 @@ const PipLike = styled.div`
 
     cursor: ${(props) => (props.moveable || props.highlighted) && "pointer"};
     background-color: ${(props) => props.highlighted && "gray"} !important;
-
-    div:last-child > img {
-        box-shadow: ${(props) => props.active && "0 0 0 5px gray"};
-    }
 `;
 
 const Pip = styled(PipLike)`
@@ -98,7 +94,6 @@ function BackgammonBoard({
                         <Bar
                             key={i}
                             onClick={() => handleClickPip(i)}
-                            active={i === sourcePip}
                             moveable={isTurn && pip.top === turn && pip.size > 0}
                             gridArea={i === 0 ? "bot-mid" : "top-mid"}>
                             <CheckerStack
@@ -108,6 +103,7 @@ function BackgammonBoard({
                                 reverse={i > 12}
                                 recentMove={recentMove}
                                 pipNum={i}
+                                isSource={i === sourcePip}
                             />
                         </Bar>
                     );
@@ -116,7 +112,6 @@ function BackgammonBoard({
                     <Pip
                         key={i}
                         onClick={() => handleClickPip(i)}
-                        active={i === sourcePip}
                         highlighted={highlightedPips?.has(i)}
                         moveable={isTurn && pip.top === turn && pip.size > 0}
                         gridArea={"p" + i}>
@@ -127,6 +122,7 @@ function BackgammonBoard({
                             reverse={i <= 12}
                             recentMove={recentMove}
                             pipNum={i}
+                            isSource={i === sourcePip}
                         />
                     </Pip>
                 );
