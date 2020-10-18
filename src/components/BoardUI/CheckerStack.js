@@ -1,7 +1,5 @@
 import React from "react";
-import CheckerW from "./svg/checker-w.svg";
-import CheckerB from "./svg/checker-b.svg";
-import { Player } from "../../util.js";
+import Checker from "./Checker";
 import useMeasure from "react-use-measure";
 import { ResizeObserver } from "@juggle/resize-observer";
 import styled from "styled-components";
@@ -12,15 +10,6 @@ const Stack = styled.div`
     height: 100%;
     display: flex;
     flex-direction: ${(props) => (props.reverse ? "column-reverse" : "column")};
-
-    div {
-        position: relative;
-        img {
-            display: block;
-            border-radius: 50%;
-            width: 100%;
-        }
-    }
 `;
 
 function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
@@ -59,12 +48,14 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
                 top: translateY,
                 left: translateX,
                 zIndex: 1,
+                position: "relative",
             };
         },
         update: (item) => ({
             top: reverse ? squishAmount * item.index : -squishAmount * item.index,
             left: 0,
             zIndex: 0,
+            position: "relative",
         }),
         // Unmount instantly:
         leave: { visibility: "hidden" },
@@ -78,10 +69,7 @@ function CheckerStack({ size, top, bot, reverse, pipNum, recentMove }) {
                     key={key}
                     style={props}
                     ref={(el) => (domRefs[pipNum][item.color] = el)}>
-                    <img
-                        src={item.color === Player.white ? CheckerW : CheckerB}
-                        alt={Player.properties[item.color].colorName}
-                    />
+                    <Checker color={item.color} />
                 </animated.div>
             ))}
         </Stack>
