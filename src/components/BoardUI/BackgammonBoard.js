@@ -12,13 +12,14 @@ const Board = styled.div`
     grid-template-rows: minmax(0, 1fr) 50px minmax(0, 1fr);
     grid-gap: 5px;
     grid-template-areas:
-        "o-tl p13 p14 p15 p16 p17 p18 b-t p19 p20 p21 p22 p23 p24 o-tr"
+        "top-left p13 p14 p15 p16 p17 p18 top-mid p19 p20 p21 p22 p23 p24 top-right"
         "ui ui ui ui ui ui ui ui ui ui ui ui ui ui ui"
-        "o-bl p12 p11 p10 p9 p8 p7 b-b p6 p5 p4 p3 p2 p1 o-br";
+        "bot-left p12 p11 p10 p9 p8 p7 bot-mid p6 p5 p4 p3 p2 p1 bot-right";
 `;
 
 const Pip = styled.div`
     background-color: #f7d086;
+    grid-area: ${(props) => props.gridArea};
 
     ${(props) =>
         props.moveable &&
@@ -42,6 +43,7 @@ const Pip = styled.div`
 
 const Bar = styled.div`
     background-color: #c49158;
+    grid-area: ${(props) => props.gridArea};
 
     ${(props) =>
         props.moveable &&
@@ -60,6 +62,7 @@ const Bar = styled.div`
 
 const Off = styled.div`
     background-color: #745138;
+    grid-area: ${(props) => props.gridArea};
 
     ${(props) =>
         props.highlighted &&
@@ -67,6 +70,10 @@ const Off = styled.div`
             cursor: pointer;
             background-color: gray !important;
         `};
+`;
+
+const UI = styled.div`
+    grid-area: ${(props) => props.gridArea};
 `;
 
 function BackgammonBoard2({
@@ -127,7 +134,7 @@ function BackgammonBoard2({
                             onClick={() => handleClickPip(i)}
                             active={i === sourcePip}
                             moveable={isTurn && pip.top === turn && pip.size > 0}
-                            style={{ gridArea: i === 0 ? "b-b" : "b-t" }}>
+                            gridArea={i === 0 ? "bot-mid" : "top-mid"}>
                             <CheckerStack
                                 size={pip.size}
                                 top={pip.top}
@@ -146,7 +153,7 @@ function BackgammonBoard2({
                         active={i === sourcePip}
                         highlighted={highlightedPips?.has(i)}
                         moveable={isTurn && pip.top === turn && pip.size > 0}
-                        style={{ gridArea: "p" + i }}>
+                        gridArea={"p" + i}>
                         <CheckerStack
                             size={pip.size}
                             top={pip.top}
@@ -160,7 +167,7 @@ function BackgammonBoard2({
             })}
             {/* <!-- --> */}
             <Off
-                style={{ gridArea: flipOffWhite ? "o-tl" : "o-tr" }}
+                gridArea={flipOffWhite ? "top-left" : "top-right"}
                 onClick={() => handleClickOff(Player.white)}
                 highlighted={highlightedPips?.has(25)}>
                 <CheckerStack
@@ -173,7 +180,7 @@ function BackgammonBoard2({
                 />
             </Off>
             <Off
-                style={{ gridArea: "o-br" }}
+                gridArea="bot-right"
                 onClick={() => handleClickOff(Player.black)}
                 highlighted={highlightedPips?.has(0)}>
                 <CheckerStack
@@ -186,10 +193,10 @@ function BackgammonBoard2({
                 />
             </Off>
             {/* <!-- --> */}
-            <Off style={{ gridArea: flipOffWhite ? "o-tr" : "o-tl" }}></Off>
-            <Off style={{ gridArea: "o-bl" }}></Off>
+            <Off gridArea={flipOffWhite ? "top-right" : "top-left"}></Off>
+            <Off gridArea="bot-left"></Off>
             {/* <!-- --> */}
-            <div style={{ gridArea: "ui" }}></div>
+            <UI gridArea="ui"></UI>
         </Board>
     );
 }
