@@ -15,10 +15,10 @@ function BackgammonExtras({
     return (
         <ListGroup horizontal="lg">
             <ListGroupItem>
-                {player ? `Playing as ${Player.properties[player].colorName}` : "Spectating"}
+                {`Score: White ${score[Player.white]}–${score[Player.black]} Black`}
             </ListGroupItem>
             <ListGroupItem>
-                {`Score: White ${score[Player.white]}–${score[Player.black]} Black`}
+                {player ? `Playing as ${Player.properties[player].colorName}` : "Spectating"}
             </ListGroupItem>
             <ListGroupItem>
                 {winner !== null
