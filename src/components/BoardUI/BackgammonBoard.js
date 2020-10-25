@@ -10,9 +10,16 @@ const Board = styled.div`
     grid-template-columns: repeat(15, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
     grid-column-gap: 5px;
-    grid-template-areas:
+    grid-template-areas: ${(props) =>
+        !props.rotate
+            ? `
         "top-left p13 p14 p15 p16 p17 p18 top-mid p19 p20 p21 p22 p23 p24 top-right"
         "bot-left p12 p11 p10 p9 p8 p7 bot-mid p6 p5 p4 p3 p2 p1 bot-right";
+        `
+            : `
+        "bot-right p1 p2 p3 p4 p5 p6 bot-mid p7 p8 p9 p10 p11 p12 bot-left"
+        "top-right p24 p23 p22 p21 p20 p19 top-mid p18 p17 p16 p15 p14 p13 top-left";
+        `};
 `;
 
 const BoardChild = styled.div`
@@ -53,6 +60,7 @@ function BackgammonBoard({
     doMove,
     getPossiblePips,
     flipOffWhite,
+    rotate,
 }) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
@@ -96,7 +104,7 @@ function BackgammonBoard({
     };
 
     return (
-        <Board>
+        <Board rotate={rotate}>
             {pips.map((pip, i) => {
                 if (i === 0 || i === 25)
                     return (
@@ -109,7 +117,7 @@ function BackgammonBoard({
                                 size={pip.size}
                                 top={pip.top}
                                 bot={pip.bot}
-                                reverse={i > 12}
+                                reverse={!rotate ? i > 12 : i <= 12}
                                 recentMove={recentMove}
                                 pipNum={i}
                                 isSource={i === sourcePip}
@@ -124,12 +132,12 @@ function BackgammonBoard({
                         canMoveTo={highlightedPips?.has(i)}
                         canMoveFrom={isTurn && pip.top === turn && pip.size > 0}
                         gridArea={"p" + i}
-                        reverse={i <= 12}>
+                        reverse={!rotate ? i <= 12 : i > 12}>
                         <CheckerStack
                             size={pip.size}
                             top={pip.top}
                             bot={pip.bot}
-                            reverse={i <= 12}
+                            reverse={!rotate ? i <= 12 : i > 12}
                             recentMove={recentMove}
                             pipNum={i}
                             isSource={i === sourcePip}
@@ -146,7 +154,7 @@ function BackgammonBoard({
                     size={off[Player.white]}
                     top={Player.white}
                     bot={Player.white}
-                    reverse={false}
+                    reverse={!rotate ? false : true}
                     recentMove={recentMove}
                     pipNum={25}
                 />
@@ -159,7 +167,7 @@ function BackgammonBoard({
                     size={off[Player.black]}
                     top={Player.black}
                     bot={Player.black}
-                    reverse={true}
+                    reverse={!rotate ? true : false}
                     recentMove={recentMove}
                     pipNum={0}
                 />

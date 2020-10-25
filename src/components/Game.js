@@ -56,6 +56,10 @@ function Game({ player, roomStep, startingRolls, variant, boardState }) {
                     doMove={doMove}
                     getPossiblePips={getPossiblePips}
                     flipOffWhite={variant === Variant.fevga}
+                    rotate={
+                        (player === Player.white && variant !== Variant.plakoto) ||
+                        (player === Player.black && variant === Variant.plakoto)
+                    }
                 />
                 {roomStep === RoomStep.startingRoll ? (
                     <BackgammonOverlay
