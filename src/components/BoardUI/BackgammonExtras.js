@@ -16,7 +16,7 @@ function BackgammonExtras({ boardState: { turn, winner }, player, score }) {
                     ? `${Player.properties[winner].colorName} won!`
                     : turn !== null
                     ? `${Player.properties[turn].colorName}’s turn`
-                    : null}
+                    : "Starting roll"}
             </ListGroupItem>
         </ListGroup>
     );

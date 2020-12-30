@@ -26,6 +26,10 @@ const Overlay = styled.div`
         > *:not(:last-child) {
             margin-bottom: 0.5em;
         }
+
+        img {
+            height: 2em;
+        }
     }
 `;
 
