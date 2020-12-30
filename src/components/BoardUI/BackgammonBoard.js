@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { Player } from "../../util.js";
 import styled from "styled-components";
 import CheckerStack from "./CheckerStack";
+import Dice from "./Dice";
+
 const Board = styled.div`
     background: #402d26;
     width: 100%;
     height: 75vh;
     display: grid;
     grid-template-columns: repeat(15, minmax(0, 1fr));
-    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
     grid-column-gap: 5px;
     grid-template-areas:
         "top-left p13 p14 p15 p16 p17 p18 top-mid p19 p20 p21 p22 p23 p24 top-right"
+        ". . . . . . . . . . . . . . ."
         "bot-left p12 p11 p10 p9 p8 p7 bot-mid p6 p5 p4 p3 p2 p1 bot-right";
 `;
 
@@ -48,7 +51,7 @@ const Off = styled(BoardChild)`
 `;
 
 function BackgammonBoard({
-    boardState: { pips, off, turn, recentMove },
+    boardState: { pips, off, turn, recentMove, dice, diceRolled },
     isTurn,
     doMove,
     getPossiblePips,
@@ -167,6 +170,24 @@ function BackgammonBoard({
             {/* <!-- --> */}
             <Off gridArea={flipOffWhite ? "top-right" : "top-left"}></Off>
             <Off gridArea="bot-left"></Off>
+            <div
+                style={{
+                    gridRow: "2",
+                    gridColumn: "2 / 8",
+                    display: "flex",
+                    justifyContent: "center",
+                }}>
+                {turn === Player.white && <Dice initialDice={diceRolled} remainingDice={dice} />}
+            </div>
+            <div
+                style={{
+                    gridRow: "2",
+                    gridColumn: "9 / 15",
+                    display: "flex",
+                    justifyContent: "center",
+                }}>
+                {turn === Player.black && <Dice initialDice={diceRolled} remainingDice={dice} />}
+            </div>
         </Board>
     );
 }

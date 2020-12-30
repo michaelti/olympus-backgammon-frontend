@@ -4,8 +4,6 @@ import Die from "./Die";
 
 const Container = styled.div`
     display: flex;
-    margin-left: -0.25em;
-    margin-right: -0.25em;
 
     > * {
         margin-left: 0.25em;
