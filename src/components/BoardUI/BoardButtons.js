@@ -6,6 +6,7 @@ const Buttons = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
+    background-color: #402d26;
     padding: 5px 0;
     margin: 0 -5px;
     gap: 5px;
