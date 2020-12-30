@@ -5,7 +5,6 @@ import { Player } from "../../util";
 function BackgammonExtras({
     boardState: { turn, winner },
     applyTurn,
-    undoTurn,
     undoMove,
     player,
     isTurn,
@@ -28,13 +27,10 @@ function BackgammonExtras({
             </ListGroupItem>
             <ListGroupItem>
                 <Button onClick={applyTurn} color="success" className="mr-3" disabled={!isTurn}>
-                    Finish turn
-                </Button>
-                <Button onClick={undoTurn} disabled={!isTurn} className="mr-1">
-                    Undo Turn
+                    &#10003; Finish turn
                 </Button>
                 <Button onClick={undoMove} disabled={!isTurn}>
-                    Undo Move
+                    &#8634; Undo
                 </Button>
             </ListGroupItem>
         </ListGroup>

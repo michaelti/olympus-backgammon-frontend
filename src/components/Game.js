@@ -14,7 +14,6 @@ const BoardContainer = styled.div`
 function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
     const doMove = (from, to) => socketEmit("game/move", from, to);
     const applyTurn = () => socketEmit("game/apply-turn");
-    const undoTurn = () => socketEmit("game/undo-turn");
     const undoMove = () => socketEmit("game/undo-move");
 
     const getPossiblePips = (from) => {
@@ -44,7 +43,6 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
             <BackgammonExtras
                 boardState={boardState}
                 applyTurn={applyTurn}
-                undoTurn={undoTurn}
                 undoMove={undoMove}
                 player={player}
                 isTurn={!process.env.REACT_APP_GAMEDEV ? player === boardState.turn : true}

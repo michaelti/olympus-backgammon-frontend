@@ -177,6 +177,7 @@ function BackgammonBoard({
                     display: "flex",
                     justifyContent: "center",
                 }}>
+                {turn === Player.black && "Opponent's turn"}
                 {turn === Player.white && <Dice initialDice={diceRolled} remainingDice={dice} />}
             </div>
             <div
