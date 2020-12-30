@@ -1,5 +1,5 @@
 import React from "react";
-import { ListGroup, ListGroupItem, Button } from "reactstrap";
+import { ListGroup, ListGroupItem } from "reactstrap";
 import { Player } from "../../util";
 
 function BackgammonExtras({ boardState: { turn, winner }, player, score }) {
