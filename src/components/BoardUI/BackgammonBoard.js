@@ -3,6 +3,7 @@ import { Player } from "../../util.js";
 import styled from "styled-components";
 import CheckerStack from "./CheckerStack";
 import Dice from "./Dice";
+import BoardButtons from "./BoardButtons";
 
 const Board = styled.div`
     background: #402d26;
@@ -10,7 +11,7 @@ const Board = styled.div`
     height: 75vh;
     display: grid;
     grid-template-columns: repeat(15, minmax(0, 1fr));
-    grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) 50px minmax(0, 1fr);
     grid-column-gap: 5px;
     grid-template-areas:
         "top-left p13 p14 p15 p16 p17 p18 top-mid p19 p20 p21 p22 p23 p24 top-right"
@@ -56,6 +57,8 @@ function BackgammonBoard({
     doMove,
     getPossiblePips,
     flipOffWhite,
+    applyTurn,
+    undoMove,
 }) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
@@ -177,8 +180,11 @@ function BackgammonBoard({
                     display: "flex",
                     justifyContent: "center",
                 }}>
-                {turn === Player.black && "Opponent's turn"}
-                {turn === Player.white && <Dice initialDice={diceRolled} remainingDice={dice} />}
+                {turn === Player.white && (
+                    <>
+                        <Dice initialDice={diceRolled} remainingDice={dice} />
+                    </>
+                )}
             </div>
             <div
                 style={{
@@ -188,6 +194,21 @@ function BackgammonBoard({
                     justifyContent: "center",
                 }}>
                 {turn === Player.black && <Dice initialDice={diceRolled} remainingDice={dice} />}
+            </div>
+            <div
+                style={{
+                    gridRow: "2",
+                    gridColumn: "8",
+                    background: isTurn ? "transparent" : "#c49158",
+                }}>
+                {isTurn && (
+                    <BoardButtons
+                        applyTurn={applyTurn}
+                        undoMove={undoMove}
+                        canUndo={dice.length < diceRolled.length}
+                        shouldFinish={dice.length === 0}
+                    />
+                )}
             </div>
         </Board>
     );

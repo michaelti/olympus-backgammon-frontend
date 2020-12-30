@@ -40,14 +40,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
 
     return boardState === null ? null : (
         <>
-            <BackgammonExtras
-                boardState={boardState}
-                applyTurn={applyTurn}
-                undoMove={undoMove}
-                player={player}
-                isTurn={!process.env.REACT_APP_GAMEDEV ? player === boardState.turn : true}
-                score={score}
-            />
+            <BackgammonExtras boardState={boardState} player={player} score={score} />
             <BoardContainer>
                 <BackgammonBoard
                     boardState={boardState}
@@ -55,6 +48,8 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
                     doMove={doMove}
                     getPossiblePips={getPossiblePips}
                     flipOffWhite={variant === Variant.fevga}
+                    applyTurn={applyTurn}
+                    undoMove={undoMove}
                 />
                 {roomStep === RoomStep.startingRoll ? (
                     <BackgammonOverlay

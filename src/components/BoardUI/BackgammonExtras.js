@@ -2,14 +2,7 @@ import React from "react";
 import { ListGroup, ListGroupItem, Button } from "reactstrap";
 import { Player } from "../../util";
 
-function BackgammonExtras({
-    boardState: { turn, winner },
-    applyTurn,
-    undoMove,
-    player,
-    isTurn,
-    score,
-}) {
+function BackgammonExtras({ boardState: { turn, winner }, player, score }) {
     return (
         <ListGroup horizontal="lg">
             <ListGroupItem>
@@ -24,14 +17,6 @@ function BackgammonExtras({
                     : turn !== null
                     ? `${Player.properties[turn].colorName}’s turn`
                     : null}
-            </ListGroupItem>
-            <ListGroupItem>
-                <Button onClick={applyTurn} color="success" className="mr-3" disabled={!isTurn}>
-                    &#10003; Finish turn
-                </Button>
-                <Button onClick={undoMove} disabled={!isTurn}>
-                    &#8634; Undo
-                </Button>
             </ListGroupItem>
         </ListGroup>
     );
