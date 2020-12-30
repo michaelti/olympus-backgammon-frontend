@@ -15,7 +15,7 @@ const Board = styled.div`
     grid-column-gap: 5px;
     grid-template-areas:
         "top-left p13 p14 p15 p16 p17 p18 top-mid p19 p20 p21 p22 p23 p24 top-right"
-        ". . . . . . . . . . . . . . ."
+        "mid-left . . . . . . . . . . . . . mid-right"
         "bot-left p12 p11 p10 p9 p8 p7 bot-mid p6 p5 p4 p3 p2 p1 bot-right";
 `;
 
@@ -173,12 +173,12 @@ function BackgammonBoard({
             {/* <!-- --> */}
             <Off gridArea={flipOffWhite ? "top-right" : "top-left"}></Off>
             <Off gridArea="bot-left"></Off>
+            <Off gridArea="mid-left"></Off>
+            <Off gridArea="mid-right"></Off>
             <div
                 style={{
                     gridRow: "2",
                     gridColumn: "2 / 8",
-                    display: "flex",
-                    justifyContent: "center",
                 }}>
                 {turn === Player.white && (
                     <>
@@ -190,8 +190,6 @@ function BackgammonBoard({
                 style={{
                     gridRow: "2",
                     gridColumn: "9 / 15",
-                    display: "flex",
-                    justifyContent: "center",
                 }}>
                 {turn === Player.black && <Dice initialDice={diceRolled} remainingDice={dice} />}
             </div>
