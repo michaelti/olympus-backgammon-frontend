@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { UncontrolledPopover, PopoverHeader, PopoverBody } from "reactstrap";
 import { Player } from "../../util";
+import ConnectionStatus from "../ConnectionStatus";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     background-color: #402d26;
@@ -53,7 +55,7 @@ const Button = styled.button`
     }
 `;
 
-function GameInfoButton({ player, score }) {
+function GameInfoButton({ player, score, roomName }) {
     return (
         <Container>
             <Button aria-label="Info" id="game-info-popover">
@@ -61,10 +63,32 @@ function GameInfoButton({ player, score }) {
             </Button>
             <UncontrolledPopover placement="right" trigger="legacy" target="game-info-popover">
                 <PopoverHeader>
-                    Score: White {score[Player.white]} – {score[Player.black]} Black
+                    Olympus Backgammon
+                    <span className="float-right ml-3">
+                        <ConnectionStatus />
+                    </span>
                 </PopoverHeader>
                 <PopoverBody>
-                    {player ? `Playing as ${Player.properties[player].colorName}` : "Spectating"}
+                    <div>
+                        Score:{" "}
+                        <strong>
+                            White {score[Player.white]} – {score[Player.black]} Black
+                        </strong>
+                    </div>
+                    <div>
+                        {player
+                            ? `Playing as ${Player.properties[player].colorName}`
+                            : "Spectating"}
+                    </div>
+                    <hr />
+                    <div>
+                        <h6>Invite a friend</h6>
+                        Game code: <strong>{roomName}</strong>
+                        <br />
+                        <Link to={window.location.href}>{window.location.href}</Link>
+                    </div>
+                    <hr />
+                    <Link to="/">&larr; Leave game</Link>
                 </PopoverBody>
             </UncontrolledPopover>
         </Container>

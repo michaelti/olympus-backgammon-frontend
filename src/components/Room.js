@@ -5,7 +5,7 @@ import { Player, RoomStep } from "../util";
 import RoomSetup from "./RoomSetup";
 import Game from "./Game";
 
-function Room({ setRoomName }) {
+function Room() {
     const { roomName } = useParams();
     const [player, setPlayer] = useState(undefined);
     const [failedJoin, setFailedJoin] = useState(false);
@@ -19,11 +19,10 @@ function Room({ setRoomName }) {
             if (!acknowledgement.ok) {
                 setFailedJoin(true);
             } else {
-                setRoomName(acknowledgement.roomName);
                 setPlayer(acknowledgement.player);
             }
         });
-    }, [roomName, setRoomName]);
+    }, [roomName]);
 
     useSocketOn("room/update-room", (room) => {
         updateRoomState(room);
@@ -41,6 +40,7 @@ function Room({ setRoomName }) {
                 variant={roomState.variant}
                 boardState={roomState.board || null}
                 score={roomState.score}
+                roomName={roomName}
             />
         </>
     );

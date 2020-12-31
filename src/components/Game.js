@@ -6,7 +6,7 @@ import { Player, RoomStep, Variant } from "../util";
 import { clamp, isMoveValid } from "../game";
 import GameInfoButton from "./BoardUI/GameInfoButton";
 
-function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
+function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
     const doMove = (from, to) => socketEmit("game/move", from, to);
     const applyTurn = () => socketEmit("game/apply-turn");
     const undoMove = () => socketEmit("game/undo-move");
@@ -60,7 +60,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
                     />
                 )
             }
-            gameInfoButton={<GameInfoButton player={player} score={score} />}
+            gameInfoButton={<GameInfoButton player={player} score={score} roomName={roomName} />}
         />
     );
 }
