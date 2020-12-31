@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import { useSocketOn, socketEmit } from "../api";
-import { Container } from "reactstrap";
 import { Player, RoomStep } from "../util";
 import RoomSetup from "./RoomSetup";
 import Game from "./Game";
@@ -33,7 +32,7 @@ function Room({ setRoomName }) {
     if (failedJoin) return <Redirect to="/" />;
 
     return (
-        <Container className="py-5">
+        <>
             <RoomSetup show={roomState.step === RoomStep.setup && player === Player.white} />
             <Game
                 player={player}
@@ -43,7 +42,7 @@ function Room({ setRoomName }) {
                 boardState={roomState.board || null}
                 score={roomState.score}
             />
-        </Container>
+        </>
     );
 }
 

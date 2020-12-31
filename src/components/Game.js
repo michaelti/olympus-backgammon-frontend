@@ -1,15 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
 import { socketEmit } from "../api";
 import { Player, RoomStep, Variant } from "../util";
 import { clamp, isMoveValid } from "../game";
 import GameInfoButton from "./BoardUI/GameInfoButton";
-
-const BoardContainer = styled.div`
-    position: relative;
-`;
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
     const doMove = (from, to) => socketEmit("game/move", from, to);
@@ -39,36 +34,34 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
     };
 
     return boardState === null ? null : (
-        <BoardContainer>
-            <BackgammonBoard
-                boardState={boardState}
-                isTurn={!process.env.REACT_APP_GAMEDEV ? player === boardState.turn : true}
-                doMove={doMove}
-                getPossiblePips={getPossiblePips}
-                flipOffWhite={variant === Variant.fevga}
-                applyTurn={applyTurn}
-                undoMove={undoMove}
-                startingRollW={
-                    roomStep === RoomStep.startingRoll && (
-                        <BackgammonStartingRoll
-                            startingRolls={startingRolls}
-                            player={player}
-                            color={Player.white}
-                        />
-                    )
-                }
-                startingRollB={
-                    roomStep === RoomStep.startingRoll && (
-                        <BackgammonStartingRoll
-                            startingRolls={startingRolls}
-                            player={player}
-                            color={Player.black}
-                        />
-                    )
-                }
-                gameInfoButton={<GameInfoButton player={player} score={score} />}
-            />
-        </BoardContainer>
+        <BackgammonBoard
+            boardState={boardState}
+            isTurn={!process.env.REACT_APP_GAMEDEV ? player === boardState.turn : true}
+            doMove={doMove}
+            getPossiblePips={getPossiblePips}
+            flipOffWhite={variant === Variant.fevga}
+            applyTurn={applyTurn}
+            undoMove={undoMove}
+            startingRollW={
+                roomStep === RoomStep.startingRoll && (
+                    <BackgammonStartingRoll
+                        startingRolls={startingRolls}
+                        player={player}
+                        color={Player.white}
+                    />
+                )
+            }
+            startingRollB={
+                roomStep === RoomStep.startingRoll && (
+                    <BackgammonStartingRoll
+                        startingRolls={startingRolls}
+                        player={player}
+                        color={Player.black}
+                    />
+                )
+            }
+            gameInfoButton={<GameInfoButton player={player} score={score} />}
+        />
     );
 }
 

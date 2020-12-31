@@ -8,7 +8,7 @@ import BoardButtons from "./BoardButtons";
 const Board = styled.div`
     background: #402d26;
     width: 100%;
-    height: 75vh;
+    height: calc(100vh - 60px);
     display: grid;
     grid-template-columns: repeat(15, minmax(0, 1fr));
     grid-template-rows: minmax(0, 1fr) 50px minmax(0, 1fr);
