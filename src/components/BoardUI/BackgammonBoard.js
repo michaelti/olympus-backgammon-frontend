@@ -61,6 +61,7 @@ function BackgammonBoard({
     undoMove,
     startingRollW,
     startingRollB,
+    gameInfoButton,
 }) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
@@ -175,11 +176,9 @@ function BackgammonBoard({
             {/* <!-- --> */}
             <Off gridArea={flipOffWhite ? "top-right" : "top-left"}></Off>
             <Off gridArea="bot-left"></Off>
-            {/* <!-- --> */}
-            <Off gridArea="mid-left"></Off>
-            <Off gridArea="mid-right"></Off>
             {/* <!-- UI --> */}
-
+            <Off gridArea="mid-left">{gameInfoButton}</Off>
+            <Off gridArea="mid-right"></Off>
             <BoardChild gridArea="ui-l">
                 {startingRollW}
                 {turn === Player.white && <Dice initialDice={diceRolled} remainingDice={dice} />}
