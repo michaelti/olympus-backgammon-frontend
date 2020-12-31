@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonExtras from "./BoardUI/BackgammonExtras";
-import BackgammonOverlay from "./BoardUI/BackgammonOverlay";
+import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
 import { socketEmit } from "../api";
 import { Player, RoomStep, Variant } from "../util";
 import { clamp, isMoveValid } from "../game";
@@ -50,15 +50,25 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score }) {
                     flipOffWhite={variant === Variant.fevga}
                     applyTurn={applyTurn}
                     undoMove={undoMove}
+                    startingRollW={
+                        roomStep === RoomStep.startingRoll ? (
+                            <BackgammonStartingRoll
+                                startingRolls={startingRolls}
+                                player={player}
+                                color={Player.white}
+                            />
+                        ) : null
+                    }
+                    startingRollB={
+                        roomStep === RoomStep.startingRoll ? (
+                            <BackgammonStartingRoll
+                                startingRolls={startingRolls}
+                                player={player}
+                                color={Player.black}
+                            />
+                        ) : null
+                    }
                 />
-                {roomStep === RoomStep.startingRoll ? (
-                    <BackgammonOverlay
-                        dieWhite={startingRolls[Player.white]}
-                        dieBlack={startingRolls[Player.black]}
-                        dieDraw={startingRolls.draw}
-                        player={player}
-                    />
-                ) : null}
             </BoardContainer>
         </>
     );

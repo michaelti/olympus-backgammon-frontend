@@ -59,6 +59,8 @@ function BackgammonBoard({
     flipOffWhite,
     applyTurn,
     undoMove,
+    startingRollW,
+    startingRollB,
 }) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
@@ -179,9 +181,11 @@ function BackgammonBoard({
             {/* <!-- UI --> */}
 
             <BoardChild gridArea="ui-l">
+                {startingRollW}
                 {turn === Player.white && <Dice initialDice={diceRolled} remainingDice={dice} />}
             </BoardChild>
             <BoardChild gridArea="ui-r">
+                {startingRollB}
                 {turn === Player.black && <Dice initialDice={diceRolled} remainingDice={dice} />}
             </BoardChild>
             <Bar gridArea="mid-mid">
