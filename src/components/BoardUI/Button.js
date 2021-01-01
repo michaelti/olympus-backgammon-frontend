@@ -11,6 +11,7 @@ const StyledButton = styled.button`
     background-color: #f1d190;
     color: #212121;
     transition: background-color 0.15s;
+    touch-action: manipulation;
 
     &:hover,
     &:active,
