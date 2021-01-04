@@ -3,7 +3,7 @@ import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
 import { socketEmit } from "../api";
 import { Player, RoomStep, Variant } from "../util";
-import { clamp, isMoveValid } from "../game";
+import { clamp, isMoveValid, isNextMoveValid } from "../game";
 import GameInfoButton from "./BoardUI/GameInfoButton";
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
@@ -18,25 +18,79 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     const applyTurn = () => socketEmit("game/apply-turn");
     const undoMove = () => socketEmit("game/undo-move");
 
-    const getPossiblePips = (from) => {
-        let possiblePips = {};
+    const getTo = (from, die) => {
         let to;
-
-        for (const die of boardState.dice) {
-            if (variant === Variant.fevga) {
-                to = from - die;
-                if (boardState.turn === Player.white) {
-                    if (from >= 13 && to <= 12) to = 25;
-                    else if (to < 1) to += 24;
-                } else {
-                    to = clamp(from - die);
-                }
+        if (variant === Variant.fevga) {
+            to = from - die;
+            if (boardState.turn === Player.white) {
+                if (from >= 13 && to <= 12) to = 25;
+                else if (to < 1) to += 24;
             } else {
-                to = clamp(from + die * boardState.turn);
+                to = clamp(from - die);
             }
-            if (isMoveValid[variant](from, to, boardState)) {
-                possiblePips[to] = [to];
-            }
+        } else {
+            to = clamp(from + die * boardState.turn);
+        }
+        return to;
+    };
+
+    const getPossiblePips = (from) => {
+        let possiblePips = new Set();
+        let to, to2, to3, to4;
+        const die = boardState.dice;
+
+        switch (die.length) {
+            case 1:
+                to = getTo(from, die[0]);
+                if (isMoveValid[variant](from, to, boardState)) possiblePips.add(to);
+                break;
+            case 2:
+                to = getTo(from, die[0]);
+                to2 = getTo(from, die[0] + die[1]);
+                if (isMoveValid[variant](from, to, boardState)) {
+                    possiblePips.add(to);
+                    if (isNextMoveValid(to, to2, boardState, variant)) possiblePips.add(to2);
+                }
+                to = getTo(from, die[1]);
+                if (isMoveValid[variant](from, to, boardState)) {
+                    possiblePips.add(to);
+                    if (isNextMoveValid(to, to2, boardState, variant)) possiblePips.add(to2);
+                }
+                break;
+            case 3:
+                to = getTo(from, die[0]);
+                if (isMoveValid[variant](from, to, boardState)) {
+                    possiblePips.add(to);
+                    to2 = getTo(from, die[0] + die[1]);
+                    if (isNextMoveValid(to, to2, boardState, variant)) {
+                        possiblePips.add(to2);
+                        to3 = getTo(from, die[0] + die[1] + die[2]);
+                        if (isNextMoveValid(to2, to3, boardState, variant)) {
+                            possiblePips.add(to3);
+                        }
+                    }
+                }
+                break;
+            case 4:
+                to = getTo(from, die[0]);
+                if (isMoveValid[variant](from, to, boardState)) {
+                    possiblePips.add(to);
+                    to2 = getTo(from, die[0] + die[1]);
+                    if (isNextMoveValid(to, to2, boardState, variant)) {
+                        possiblePips.add(to2);
+                        to3 = getTo(from, die[0] + die[1] + die[2]);
+                        if (isNextMoveValid(to2, to3, boardState, variant)) {
+                            possiblePips.add(to3);
+                            to4 = getTo(from, die[0] + die[1] + die[2] + die[3]);
+                            if (isNextMoveValid(to3, to4, boardState, variant)) {
+                                possiblePips.add(to4);
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
         }
 
         return possiblePips;

@@ -4,6 +4,16 @@ export const clamp = (to) => (to < 0 ? 0 : to > 25 ? 25 : to);
 export const range = (start, end, length = end - start + 1) =>
     Array.from({ length }, (_, i) => start + i);
 
+export const isNextMoveValid = function (from, to, board, variant) {
+    const pipBackup = board.pips[from].top;
+    board.pips[from].size++;
+    board.pips[from].top = board.turn;
+    const ret = isMoveValid[variant](from, to, board);
+    board.pips[from].top = pipBackup;
+    board.pips[from].size--;
+    return ret;
+};
+
 export const isMoveValid = {
     [Variant.portes]: function (from, to, board) {
         to = clamp(to);
