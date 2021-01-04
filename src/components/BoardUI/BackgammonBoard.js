@@ -65,10 +65,10 @@ function BackgammonBoard({
 }) {
     const [moving, setMoving] = useState(false);
     const [sourcePip, setSourcePip] = useState(undefined);
-    const [highlightedPips, setHighlightedPips] = useState(null);
+    const [highlightedPips, setHighlightedPips] = useState({});
 
     const clearMove = () => {
-        setHighlightedPips(null);
+        setHighlightedPips({});
         setSourcePip(undefined);
         setMoving(false);
     };
@@ -85,8 +85,8 @@ function BackgammonBoard({
         if (!moving) startMove(clickedPip);
         else {
             // We are moving; complete the move if it's valid (and not to the bar)
-            if (highlightedPips.has(clickedPip) && clickedPip !== 0 && clickedPip !== 25) {
-                doMove(sourcePip, clickedPip);
+            if (clickedPip in highlightedPips && clickedPip !== 0 && clickedPip !== 25) {
+                doMove(sourcePip, highlightedPips[clickedPip]);
                 clearMove();
             } else {
                 // Try to start a new move if this one wasn't valid
@@ -130,7 +130,7 @@ function BackgammonBoard({
                     <Pip
                         key={i}
                         onClick={() => handleClickPip(i)}
-                        canMoveTo={highlightedPips?.has(i)}
+                        canMoveTo={i in highlightedPips}
                         canMoveFrom={isTurn && pip.top === turn && pip.size > 0}
                         gridArea={"p" + i}
                         reverse={i <= 12}>
@@ -150,7 +150,7 @@ function BackgammonBoard({
             <Off
                 gridArea={flipOffWhite ? "top-left" : "top-right"}
                 onClick={() => handleClickOff(Player.white)}
-                canMoveTo={highlightedPips?.has(25)}>
+                canMoveTo={25 in highlightedPips}>
                 <CheckerStack
                     size={off[Player.white]}
                     top={Player.white}
@@ -163,7 +163,7 @@ function BackgammonBoard({
             <Off
                 gridArea="bot-right"
                 onClick={() => handleClickOff(Player.black)}
-                canMoveTo={highlightedPips?.has(0)}>
+                canMoveTo={0 in highlightedPips}>
                 <CheckerStack
                     size={off[Player.black]}
                     top={Player.black}

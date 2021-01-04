@@ -7,12 +7,19 @@ import { clamp, isMoveValid } from "../game";
 import GameInfoButton from "./BoardUI/GameInfoButton";
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
-    const doMove = (from, to) => socketEmit("game/move", from, to);
+    const doMove = (from, tos) => {
+        let prev = from;
+        tos.forEach((to) => {
+            socketEmit("game/move", prev, to);
+            prev = to;
+        });
+    };
+
     const applyTurn = () => socketEmit("game/apply-turn");
     const undoMove = () => socketEmit("game/undo-move");
 
     const getPossiblePips = (from) => {
-        let possiblePips = new Set();
+        let possiblePips = {};
         let to;
 
         for (const die of boardState.dice) {
@@ -28,7 +35,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
                 to = clamp(from + die * boardState.turn);
             }
             if (isMoveValid[variant](from, to, boardState)) {
-                possiblePips.add(to);
+                possiblePips[to] = [to];
             }
         }
 
