@@ -39,58 +39,36 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
         let to, to2, to3, to4;
         const die = boardState.dice;
 
-        switch (die.length) {
-            case 1:
-                to = getTo(from, die[0]);
-                if (isMoveValid[variant](from, to, boardState)) possiblePips.add(to);
-                break;
-            case 2:
-                to = getTo(from, die[0]);
+        // eslint-disable-next-line
+        block: {
+            to = getTo(from, die[0]);
+            if (isMoveValid[variant](from, to, boardState)) {
+                possiblePips.add(to);
+                if (die.length === 1) break block;
+
                 to2 = getTo(from, die[0] + die[1]);
-                if (isMoveValid[variant](from, to, boardState)) {
-                    possiblePips.add(to);
-                    if (isNextMoveValid(to, to2, boardState, variant)) possiblePips.add(to2);
+
+                let otherTo = getTo(from, die[1]);
+                if (isMoveValid[variant](from, otherTo, boardState)) {
+                    possiblePips.add(otherTo);
+                    if (isNextMoveValid(otherTo, to2, boardState, variant)) possiblePips.add(to2);
                 }
-                to = getTo(from, die[1]);
-                if (isMoveValid[variant](from, to, boardState)) {
-                    possiblePips.add(to);
-                    if (isNextMoveValid(to, to2, boardState, variant)) possiblePips.add(to2);
-                }
-                break;
-            case 3:
-                to = getTo(from, die[0]);
-                if (isMoveValid[variant](from, to, boardState)) {
-                    possiblePips.add(to);
-                    to2 = getTo(from, die[0] + die[1]);
-                    if (isNextMoveValid(to, to2, boardState, variant)) {
-                        possiblePips.add(to2);
-                        to3 = getTo(from, die[0] + die[1] + die[2]);
-                        if (isNextMoveValid(to2, to3, boardState, variant)) {
-                            possiblePips.add(to3);
+
+                if (isNextMoveValid(to, to2, boardState, variant)) {
+                    possiblePips.add(to2);
+                    if (die.length === 2) break block;
+
+                    to3 = getTo(from, die[0] + die[1] + die[2]);
+                    if (isNextMoveValid(to2, to3, boardState, variant)) {
+                        possiblePips.add(to3);
+                        if (die.length === 3) break block;
+                        to4 = getTo(from, die[0] + die[1] + die[2] + die[3]);
+                        if (isNextMoveValid(to3, to4, boardState, variant)) {
+                            possiblePips.add(to4);
                         }
                     }
                 }
-                break;
-            case 4:
-                to = getTo(from, die[0]);
-                if (isMoveValid[variant](from, to, boardState)) {
-                    possiblePips.add(to);
-                    to2 = getTo(from, die[0] + die[1]);
-                    if (isNextMoveValid(to, to2, boardState, variant)) {
-                        possiblePips.add(to2);
-                        to3 = getTo(from, die[0] + die[1] + die[2]);
-                        if (isNextMoveValid(to2, to3, boardState, variant)) {
-                            possiblePips.add(to3);
-                            to4 = getTo(from, die[0] + die[1] + die[2] + die[3]);
-                            if (isNextMoveValid(to3, to4, boardState, variant)) {
-                                possiblePips.add(to4);
-                            }
-                        }
-                    }
-                }
-                break;
-            default:
-                break;
+            }
         }
 
         return possiblePips;
