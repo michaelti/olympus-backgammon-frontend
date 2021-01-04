@@ -1,4 +1,3 @@
-/* eslint-disable no-labels */
 import React from "react";
 import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
@@ -19,61 +18,60 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     const applyTurn = () => socketEmit("game/apply-turn");
     const undoMove = () => socketEmit("game/undo-move");
 
-    const getTo = (from, die) => {
-        let to;
+    const getEndPip = (start, die) => {
+        let end;
         if (variant === Variant.fevga) {
-            to = from - die;
+            end = start - die;
             if (boardState.turn === Player.white) {
-                if (from >= 13 && to <= 12) to = 25;
-                else if (to < 1) to += 24;
+                if (start >= 13 && end <= 12) end = 25;
+                else if (end < 1) end += 24;
             } else {
-                to = clamp(from - die);
+                end = clamp(start - die);
             }
         } else {
-            to = clamp(from + die * boardState.turn);
+            end = clamp(start + die * boardState.turn);
         }
-        return to;
+        return end;
     };
 
-    const getPossiblePips = (from) => {
+    const getPossiblePips = (startOf1) => {
         let possiblePips = new Set();
-        let to, to2, to3, to4;
+        let endOf1, endOf2, endOf3, endOf4;
         const die = boardState.dice;
 
-        to = getTo(from, die[0]);
-        block: {
-            if (isMoveValid[variant](from, to, boardState)) {
-                possiblePips.add({ to: [to] });
-                if (die.length === 1) break block;
+        if (die.length === 2) {
+            // && not doubles:
+            endOf1 = getEndPip(startOf1, die[1]);
+            if (isMoveValid[variant](startOf1, endOf1, boardState)) {
+                possiblePips.add({ endOf1: [endOf1] });
+                endOf2 = getEndPip(endOf1, die[0]);
+                if (isNextMoveValid(endOf1, endOf2, boardState, variant))
+                    possiblePips.add({ endOf2: [endOf1, endOf2] });
+            }
+        }
 
-                to2 = getTo(from, die[0] + die[1]);
-                if (isNextMoveValid(to, to2, boardState, variant)) {
-                    possiblePips.add({ to2: [to, to2] });
-                    if (die.length === 2) break block;
+        endOf1 = getEndPip(startOf1, die[0]);
+        if (isMoveValid[variant](startOf1, endOf1, boardState)) {
+            possiblePips.add({ endOf1: [endOf1] });
+            if (die.length === 1) return possiblePips;
 
-                    to3 = getTo(from, die[0] + die[1] + die[2]);
-                    if (isNextMoveValid(to2, to3, boardState, variant)) {
-                        possiblePips.add({ to3: [to, to2, to3] });
-                        if (die.length === 3) break block;
+            endOf2 = getEndPip(endOf1, die[1]);
+            if (isNextMoveValid(endOf1, endOf2, boardState, variant)) {
+                possiblePips.add({ endOf2: [endOf1, endOf2] });
+                if (die.length === 2) return possiblePips;
 
-                        to4 = getTo(from, die[0] + die[1] + die[2] + die[3]);
-                        if (isNextMoveValid(to3, to4, boardState, variant)) {
-                            possiblePips.add({ to4: [to, to2, to3, to4] });
-                        }
+                endOf3 = getEndPip(endOf2, die[2]);
+                if (isNextMoveValid(endOf2, endOf3, boardState, variant)) {
+                    possiblePips.add({ endOf3: [endOf1, endOf2, endOf3] });
+                    if (die.length === 3) return possiblePips;
+
+                    endOf4 = getEndPip(endOf3, die[3]);
+                    if (isNextMoveValid(endOf3, endOf4, boardState, variant)) {
+                        possiblePips.add({ endOf4: [endOf1, endOf2, endOf3, endOf4] });
                     }
                 }
             }
         }
-        if (die.length === 2) {
-            // && not doubles:
-            to = getTo(from, die[1]); // this case is unique and can't be generalized
-            if (isMoveValid[variant](from, to, boardState)) {
-                possiblePips.add({ to: [to] });
-                if (isNextMoveValid(to, to2, boardState, variant))
-                    possiblePips.add({ to2: [to, to2] });
-            }
-        }
-
         return possiblePips;
     };
 
