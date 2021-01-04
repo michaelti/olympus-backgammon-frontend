@@ -8,10 +8,10 @@ import GameInfoButton from "./BoardUI/GameInfoButton";
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
     const doMove = (from, tos) => {
-        let prev = from;
+        let currentFrom = from;
         tos.forEach((to) => {
-            socketEmit("game/move", prev, to);
-            prev = to;
+            socketEmit("game/move", currentFrom, to);
+            currentFrom = to;
         });
     };
 
