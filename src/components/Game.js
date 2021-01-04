@@ -35,38 +35,38 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     };
 
     const getPossiblePips = (startOf1) => {
-        let possiblePips = new Set();
+        let possiblePips = {};
         let endOf1, endOf2, endOf3, endOf4;
         const die = boardState.dice;
 
         if (die.length === 2 && die[0] !== die[1]) {
             endOf1 = getEndPip(startOf1, die[1]);
             if (isMoveValid[variant](startOf1, endOf1, boardState)) {
-                possiblePips.add({ endOf1: [endOf1] });
+                possiblePips[endOf1] = [endOf1];
                 endOf2 = getEndPip(endOf1, die[0]);
                 if (isNextMoveValid(endOf1, endOf2, boardState, variant))
-                    possiblePips.add({ endOf2: [endOf1, endOf2] });
+                    possiblePips[endOf2] = [endOf1, endOf2];
             }
         }
 
         endOf1 = getEndPip(startOf1, die[0]);
         if (isMoveValid[variant](startOf1, endOf1, boardState)) {
-            possiblePips.add({ endOf1: [endOf1] });
+            possiblePips[endOf1] = [endOf1];
             if (die.length === 1) return possiblePips;
 
             endOf2 = getEndPip(endOf1, die[1]);
             if (isNextMoveValid(endOf1, endOf2, boardState, variant)) {
-                possiblePips.add({ endOf2: [endOf1, endOf2] });
+                possiblePips[endOf2] = [endOf1, endOf2];
                 if (die.length === 2) return possiblePips;
 
                 endOf3 = getEndPip(endOf2, die[2]);
                 if (isNextMoveValid(endOf2, endOf3, boardState, variant)) {
-                    possiblePips.add({ endOf3: [endOf1, endOf2, endOf3] });
+                    possiblePips[endOf3] = [endOf1, endOf2, endOf3];
                     if (die.length === 3) return possiblePips;
 
                     endOf4 = getEndPip(endOf3, die[3]);
                     if (isNextMoveValid(endOf3, endOf4, boardState, variant)) {
-                        possiblePips.add({ endOf4: [endOf1, endOf2, endOf3, endOf4] });
+                        possiblePips[endOf4] = [endOf1, endOf2, endOf3, endOf4];
                     }
                 }
             }
