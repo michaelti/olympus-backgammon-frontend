@@ -39,8 +39,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
         let endOf1, endOf2, endOf3, endOf4;
         const die = boardState.dice;
 
-        if (die.length === 2) {
-            // && not doubles:
+        if (die.length === 2 && die[0] !== die[1]) {
             endOf1 = getEndPip(startOf1, die[1]);
             if (isMoveValid[variant](startOf1, endOf1, boardState)) {
                 possiblePips.add({ endOf1: [endOf1] });
