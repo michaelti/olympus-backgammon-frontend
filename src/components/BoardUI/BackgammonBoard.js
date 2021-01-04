@@ -64,12 +64,12 @@ function BackgammonBoard({
     gameInfoButton,
 }) {
     const [moving, setMoving] = useState(false);
-    const [sourcePip, setSourcePip] = useState(undefined);
+    const [sourcePip, setSourcePip] = useState(null);
     const [highlightedPips, setHighlightedPips] = useState({});
 
     const clearMove = () => {
         setHighlightedPips({});
-        setSourcePip(undefined);
+        setSourcePip(null);
         setMoving(false);
     };
 
