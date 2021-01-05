@@ -8,7 +8,9 @@ export const isNextMoveValid = function (from, to, board, variant) {
     const pipBackup = board.pips[from].top;
     board.pips[from].size++;
     board.pips[from].top = board.turn;
+    board.bar[board.turn].size--;
     const ret = isMoveValid[variant](from, to, board);
+    board.bar[board.turn].size++;
     board.pips[from].top = pipBackup;
     board.pips[from].size--;
     return ret;
