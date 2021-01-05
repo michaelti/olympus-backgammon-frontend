@@ -35,6 +35,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     };
 
     const getPossiblePips = (startOf1) => {
+        if (!boardState.dice[0]) return {};
         let possiblePips = {};
         let endOf1, endOf2, endOf3, endOf4;
         const die = boardState.dice;
