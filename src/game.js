@@ -5,15 +5,28 @@ export const range = (start, end, length = end - start + 1) =>
     Array.from({ length }, (_, i) => start + i);
 
 export const isNextMoveValid = function (from, to, board, variant) {
-    const pipBackup = board.pips[from].top;
-    board.pips[from].size++;
-    board.pips[from].top = board.turn;
-    board.bar[board.turn].size--;
-    const ret = isMoveValid[variant](from, to, board);
-    board.bar[board.turn].size++;
-    board.pips[from].top = pipBackup;
-    board.pips[from].size--;
-    return ret;
+    // Assume that we have a top checker on the pip to move from
+    const fromPip = { ...board.pips[from] };
+    fromPip.top = board.turn;
+    fromPip.size++;
+
+    // Assume that this checker might have previously moved off of the bar
+    // No need to also touch the aliased "pip", as isMoveValid doesn't look at that
+    const prevFromBar = { ...board.bar[board.turn] };
+    prevFromBar.size--;
+
+    // Insert the modified pip into a modified pips array
+    const pips = [...board.pips];
+    pips.splice(from, 1, fromPip);
+
+    // Insert the modified bar into a modified bar object
+    const bar = { ...board.bar, [board.turn]: prevFromBar };
+
+    // Create the final modified board
+    const modifiedBoard = { ...board, pips, bar };
+
+    // Validate the move using the modified board
+    return isMoveValid[variant](from, to, modifiedBoard);
 };
 
 export const isMoveValid = {
