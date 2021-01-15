@@ -3,8 +3,10 @@ import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
 import { socketEmit } from "../api";
 import { Player, RoomStep, Variant } from "../util";
-import { isMoveValid, isNextMoveValid } from "../game";
 import GameInfoButton from "./BoardUI/GameInfoButton";
+
+import clone from "ramda.clone";
+import { boards } from "../game";
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
     const doMove = (from, tos) => {
@@ -37,37 +39,46 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
 
     const getPossiblePips = (startOf1) => {
         if (!boardState.dice[0]) return {};
+
+        let boardMutate = { ...boards[variant](), ...clone(boardState) };
+
         let possiblePips = {};
         let endOf1, endOf2, endOf3, endOf4;
         const die = boardState.dice;
 
         if (die.length === 2 && die[0] !== die[1]) {
             endOf1 = getEndPip(startOf1, die[1]);
-            if (isMoveValid[variant](startOf1, endOf1, boardState)) {
+            if (boardMutate.isMoveValid(startOf1, endOf1)) {
                 possiblePips[endOf1] = [endOf1];
+                boardMutate.doMove(startOf1, endOf1);
                 endOf2 = getEndPip(endOf1, die[0]);
-                if (isNextMoveValid(endOf1, endOf2, boardState, variant))
+                if (boardMutate.isMoveValid(endOf1, endOf2))
                     possiblePips[endOf2] = [endOf1, endOf2];
             }
         }
 
+        boardMutate = { ...boards[variant](), ...clone(boardState) };
+
         endOf1 = getEndPip(startOf1, die[0]);
-        if (isMoveValid[variant](startOf1, endOf1, boardState)) {
+        if (boardMutate.isMoveValid(startOf1, endOf1)) {
             possiblePips[endOf1] = [endOf1];
             if (die.length === 1) return possiblePips;
 
+            boardMutate.doMove(startOf1, endOf1);
             endOf2 = getEndPip(endOf1, die[1]);
-            if (isNextMoveValid(endOf1, endOf2, boardState, variant)) {
+            if (boardMutate.isMoveValid(endOf1, endOf2)) {
                 possiblePips[endOf2] = [endOf1, endOf2];
                 if (die.length === 2) return possiblePips;
 
+                boardMutate.doMove(endOf1, endOf2);
                 endOf3 = getEndPip(endOf2, die[2]);
-                if (isNextMoveValid(endOf2, endOf3, boardState, variant)) {
+                if (boardMutate.isMoveValid(endOf2, endOf3)) {
                     possiblePips[endOf3] = [endOf1, endOf2, endOf3];
                     if (die.length === 3) return possiblePips;
 
+                    boardMutate.doMove(endOf2, endOf3);
                     endOf4 = getEndPip(endOf3, die[3]);
-                    if (isNextMoveValid(endOf3, endOf4, boardState, variant)) {
+                    if (boardMutate.isMoveValid(endOf3, endOf4)) {
                         possiblePips[endOf4] = [endOf1, endOf2, endOf3, endOf4];
                     }
                 }
