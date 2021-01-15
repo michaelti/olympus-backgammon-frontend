@@ -21,8 +21,10 @@ export const isNextMoveValid = function (from, to, board, variant) {
 };
 
 export const isMoveValid = {
-    [Variant.portes]: (from, to, board) => ({ ...portes.Board(), ...board }.isMoveValid(from, to)),
-    [Variant.fevga]: (from, to, board) => ({ ...fevga.Board(), ...board }.isMoveValid(from, to)),
+    [Variant.portes]: (from, to, board) =>
+        ({ ...portes.Board(), ...clone(board) }.isMoveValid(from, to)),
     [Variant.plakoto]: (from, to, board) =>
-        ({ ...plakoto.Board(), ...board }.isMoveValid(from, to)),
+        ({ ...plakoto.Board(), ...clone(board) }.isMoveValid(from, to)),
+    [Variant.fevga]: (from, to, board) =>
+        ({ ...fevga.Board(), ...clone(board) }.isMoveValid(from, to)),
 };
