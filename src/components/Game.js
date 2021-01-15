@@ -4,7 +4,6 @@ import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
 import { socketEmit } from "../api";
 import { Player, RoomStep, Variant } from "../util";
 import GameInfoButton from "./BoardUI/GameInfoButton";
-
 import clone from "ramda.clone";
 import { boards } from "../game";
 
@@ -38,14 +37,13 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     };
 
     const getPossiblePips = (startOf1) => {
-        if (!boardState.dice[0]) return {};
-
-        let boardMutate = { ...boards[variant](), ...clone(boardState) };
-
         let possiblePips = {};
+        if (!boardState.dice[0]) return possiblePips;
+        let boardMutate = { ...boards[variant](), ...clone(boardState) };
         let endOf1, endOf2, endOf3, endOf4;
         const die = boardState.dice;
 
+        // Two unique dice remaining
         if (die.length === 2 && die[0] !== die[1]) {
             endOf1 = getEndPip(startOf1, die[1]);
             if (boardMutate.isMoveValid(startOf1, endOf1)) {
