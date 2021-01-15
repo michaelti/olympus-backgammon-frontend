@@ -3,7 +3,7 @@ import BackgammonBoard from "./BoardUI/BackgammonBoard";
 import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
 import { socketEmit } from "../api";
 import { Player, RoomStep, Variant } from "../util";
-import { clamp, isMoveValid, isNextMoveValid } from "../game";
+import { isMoveValid, isNextMoveValid } from "../game";
 import GameInfoButton from "./BoardUI/GameInfoButton";
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
@@ -19,6 +19,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     const undoMove = () => socketEmit("game/undo-move");
 
     const getEndPip = (start, die) => {
+        const clamp = (to) => (to < 0 ? 0 : to > 25 ? 25 : to);
         let end;
         if (variant === Variant.fevga) {
             end = start - die;
