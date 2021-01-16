@@ -20,7 +20,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     const applyTurn = () => socketEmit("game/apply-turn");
     const undoMove = () => socketEmit("game/undo-move");
 
-    const getEndPip = (start, die) => {
+    const getNextPos = (start, die) => {
         const clamp = (to) => (to < 0 ? 0 : to > 25 ? 25 : to);
         let end;
         if (variant === Variant.fevga) {
@@ -39,13 +39,13 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
 
     const getPossiblePips = (start) => {
         let possiblePips = {};
-        if (!boardState.dice[0]) return possiblePips;
-        let boardCopy = cloneBoard[variant](boardState);
+        const dice = boardState.dice;
+        if (!dice[0]) return possiblePips;
         let pos = [start];
-        const die = boardState.dice;
+        let boardCopy = cloneBoard[variant](boardState);
 
-        for (let i = 1; i <= die.length; i++) {
-            pos[i] = getEndPip(pos[i - 1], die[i - 1]);
+        for (let i = 1; i <= dice.length; i++) {
+            pos[i] = getNextPos(pos[i - 1], dice[i - 1]);
             if (boardCopy.isMoveValid(pos[i - 1], pos[i])) {
                 possiblePips[pos[i]] = pos.slice(1, i + 1);
                 // TODO Optimize: here we call doMove once more than we have to.
@@ -56,12 +56,12 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
         boardCopy = cloneBoard[variant](boardState);
 
         // Two unique dice remaining
-        if (die.length === 2 && die[0] !== die[1]) {
-            pos[1] = getEndPip(pos[0], die[1]);
+        if (dice.length === 2 && dice[0] !== dice[1]) {
+            pos[1] = getNextPos(pos[0], dice[1]);
             if (boardCopy.isMoveValid(pos[0], pos[1])) {
                 possiblePips[pos[1]] = [pos[1]];
                 boardCopy.doMove(pos[0], pos[1]);
-                pos[2] = getEndPip(pos[1], die[0]);
+                pos[2] = getNextPos(pos[1], dice[0]);
                 if (boardCopy.isMoveValid(pos[1], pos[2])) possiblePips[pos[2]] = [pos[1], pos[2]];
             }
         }
