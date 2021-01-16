@@ -8,8 +8,10 @@ import { cloneBoard } from "../game";
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
     const doMove = (from, tos) => {
+        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
         let currentFrom = from;
-        tos.forEach((to) => {
+        tos.forEach(async (to, i) => {
+            await sleep(350 * i);
             socketEmit("game/move", currentFrom, to);
             currentFrom = to;
         });
