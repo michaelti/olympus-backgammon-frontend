@@ -4,8 +4,7 @@ import BackgammonStartingRoll from "./BoardUI/BackgammonStartingRoll";
 import { socketEmit } from "../api";
 import { Player, RoomStep, Variant } from "../util";
 import GameInfoButton from "./BoardUI/GameInfoButton";
-import clone from "ramda.clone";
-import { boards } from "../game";
+import { cloneBoard } from "../game";
 
 function Game({ player, roomStep, startingRolls, variant, boardState, score, roomName }) {
     const doMove = (from, tos) => {
@@ -39,7 +38,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     const getPossiblePips = (start) => {
         let possiblePips = {};
         if (!boardState.dice[0]) return possiblePips;
-        let boardCopy = { ...boards[variant](), ...clone(boardState) };
+        let boardCopy = cloneBoard[variant](boardState);
         let pos = [start];
         const die = boardState.dice;
 
@@ -53,9 +52,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
                 if (boardCopy.isMoveValid(pos[1], pos[2])) possiblePips[pos[2]] = [pos[1], pos[2]];
             }
         }
-        boardCopy = { ...boards[variant](), ...clone(boardState) };
-        // Portes need something like this somewhere:
-        // boardCopy.bar = { [Player.black]: boardCopy.pips[25], [Player.white]: boardCopy.pips[0] };
+        boardCopy = cloneBoard[variant](boardState);
         for (let i = 1; i <= die.length; i++) {
             pos[i] = getEndPip(pos[i - 1], die[i - 1]);
             if (boardCopy.isMoveValid(pos[i - 1], pos[i])) {
