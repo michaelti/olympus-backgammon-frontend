@@ -36,52 +36,36 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
         return end;
     };
 
-    const getPossiblePips = (startOf1) => {
+    const getPossiblePips = (pos0) => {
         let possiblePips = {};
         if (!boardState.dice[0]) return possiblePips;
         let boardMutate = { ...boards[variant](), ...clone(boardState) };
-        let endOf1, endOf2, endOf3, endOf4;
+        let pos1, pos2;
+        let pos = [];
         const die = boardState.dice;
 
         // Two unique dice remaining
         if (die.length === 2 && die[0] !== die[1]) {
-            endOf1 = getEndPip(startOf1, die[1]);
-            if (boardMutate.isMoveValid(startOf1, endOf1)) {
-                possiblePips[endOf1] = [endOf1];
-                boardMutate.doMove(startOf1, endOf1);
-                endOf2 = getEndPip(endOf1, die[0]);
-                if (boardMutate.isMoveValid(endOf1, endOf2))
-                    possiblePips[endOf2] = [endOf1, endOf2];
+            pos1 = getEndPip(pos0, die[1]);
+            if (boardMutate.isMoveValid(pos0, pos1)) {
+                possiblePips[pos1] = [pos1];
+                boardMutate.doMove(pos0, pos1);
+                pos2 = getEndPip(pos1, die[0]);
+                if (boardMutate.isMoveValid(pos1, pos2)) possiblePips[pos2] = [pos1, pos2];
             }
         }
 
         boardMutate = { ...boards[variant](), ...clone(boardState) };
-
-        endOf1 = getEndPip(startOf1, die[0]);
-        if (boardMutate.isMoveValid(startOf1, endOf1)) {
-            possiblePips[endOf1] = [endOf1];
-            if (die.length === 1) return possiblePips;
-
-            boardMutate.doMove(startOf1, endOf1);
-            endOf2 = getEndPip(endOf1, die[1]);
-            if (boardMutate.isMoveValid(endOf1, endOf2)) {
-                possiblePips[endOf2] = [endOf1, endOf2];
-                if (die.length === 2) return possiblePips;
-
-                boardMutate.doMove(endOf1, endOf2);
-                endOf3 = getEndPip(endOf2, die[2]);
-                if (boardMutate.isMoveValid(endOf2, endOf3)) {
-                    possiblePips[endOf3] = [endOf1, endOf2, endOf3];
-                    if (die.length === 3) return possiblePips;
-
-                    boardMutate.doMove(endOf2, endOf3);
-                    endOf4 = getEndPip(endOf3, die[3]);
-                    if (boardMutate.isMoveValid(endOf3, endOf4)) {
-                        possiblePips[endOf4] = [endOf1, endOf2, endOf3, endOf4];
-                    }
-                }
-            }
+        pos[0] = pos0;
+        for (let i = 1; i <= die.length; i++) {
+            pos[i] = getEndPip(pos[i - 1], die[i - 1]);
+            if (boardMutate.isMoveValid(pos[i - 1], pos[i])) {
+                possiblePips[pos[i]] = pos.slice(1, i + 1);
+                // Here we call doMove when we may not have to.
+                boardMutate.doMove(pos[i - 1], pos[i]);
+            } else break;
         }
+
         return possiblePips;
     };
 
