@@ -42,6 +42,17 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
         let pos = [start];
         const die = boardState.dice;
 
+        for (let i = 1; i <= die.length; i++) {
+            pos[i] = getEndPip(pos[i - 1], die[i - 1]);
+            if (boardCopy.isMoveValid(pos[i - 1], pos[i])) {
+                possiblePips[pos[i]] = pos.slice(1, i + 1);
+                // TODO Optimize: here we call doMove once more than we have to.
+                boardCopy.doMove(pos[i - 1], pos[i]);
+            } else break;
+        }
+
+        boardCopy = cloneBoard[variant](boardState);
+
         // Two unique dice remaining
         if (die.length === 2 && die[0] !== die[1]) {
             pos[1] = getEndPip(pos[0], die[1]);
@@ -51,15 +62,6 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
                 pos[2] = getEndPip(pos[1], die[0]);
                 if (boardCopy.isMoveValid(pos[1], pos[2])) possiblePips[pos[2]] = [pos[1], pos[2]];
             }
-        }
-        boardCopy = cloneBoard[variant](boardState);
-        for (let i = 1; i <= die.length; i++) {
-            pos[i] = getEndPip(pos[i - 1], die[i - 1]);
-            if (boardCopy.isMoveValid(pos[i - 1], pos[i])) {
-                possiblePips[pos[i]] = pos.slice(1, i + 1);
-                // TODO Optimize: here we call doMove once more than we have to.
-                boardCopy.doMove(pos[i - 1], pos[i]);
-            } else break;
         }
 
         return possiblePips;
