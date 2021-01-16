@@ -98,8 +98,8 @@ function BackgammonBoard({
 
     const handleClickOff = (clickedOff) => {
         if (moving) {
-            if (clickedOff === Player.white) doMove(sourcePip, [25]);
-            if (clickedOff === Player.black) doMove(sourcePip, [0]);
+            if (clickedOff === Player.white) doMove(sourcePip, highlightedPips[25]);
+            if (clickedOff === Player.black) doMove(sourcePip, highlightedPips[0]);
             clearMove();
         }
     };

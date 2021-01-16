@@ -10,6 +10,7 @@ function Game({ player, roomStep, startingRolls, variant, boardState, score, roo
     const doMove = (from, tos) => {
         let currentFrom = from;
         tos.forEach((to) => {
+            console.log(currentFrom, to);
             socketEmit("game/move", currentFrom, to);
             currentFrom = to;
         });
