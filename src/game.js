@@ -4,7 +4,7 @@ import clone from "ramda.clone";
 
 export const cloneBoard = {
     [Variant.portes]: (boardState) => {
-        let board = { ...portes.Board(), ...clone(boardState) };
+        const board = { ...portes.Board(), ...clone(boardState) };
         board.bar = { [Player.black]: board.pips[25], [Player.white]: board.pips[0] };
         return board;
     },
