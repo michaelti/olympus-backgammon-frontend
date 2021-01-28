@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Container, Button, Input, Form, InputGroup, InputGroupAddon } from "reactstrap";
-import { socketEmit } from "../api";
+import { socketEmit } from "../../api";
 
 function Main() {
     const [joinName, setJoinName] = useState("");
