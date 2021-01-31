@@ -45,6 +45,7 @@ function StartForm() {
         socketEmit("event/join-room", roomName, (acknowledgement) => {
             if (!acknowledgement.ok) {
                 setFailedToJoin(true);
+                setJoinName("");
             } else {
                 setShouldRedirectTo(acknowledgement.roomName);
             }
