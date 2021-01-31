@@ -1,79 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import { Container, Button, Input, Form, InputGroup, InputGroupAddon } from "reactstrap";
-import { socketEmit } from "../../api";
+import React from "react";
+import StartForm from "../StartForm";
+import styled from "styled-components";
+
+const Container = styled.main`
+    background-image: linear-gradient(-30deg, #ddd, #fff);
+    background-position: center;
+    min-height: 100vh;
+    padding: 1rem;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    @media (min-width: 40rem) {
+        grid-template-columns: fit-content(12rem) fit-content(32rem);
+    }
+`;
 
 function Main() {
-    const [joinName, setJoinName] = useState("");
-    const [shouldRedirectTo, setShouldRedirectTo] = useState(null);
-
-    const handleChange = (event) => {
-        setJoinName(event.target.value);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        joinRoom(joinName);
-    };
-
-    const startRoom = () => {
-        socketEmit("event/start-room", (acknowledgement) => {
-            if (!acknowledgement.ok) {
-                console.log(`Failed to start room "${acknowledgement.roomName}".`);
-            } else {
-                setShouldRedirectTo(acknowledgement.roomName);
-            }
-        });
-    };
-
-    const joinRoom = (roomName) => {
-        socketEmit("event/join-room", roomName, (acknowledgement) => {
-            if (!acknowledgement.ok) {
-                console.log(`Failed to join room "${acknowledgement.roomName}".`);
-            } else {
-                setShouldRedirectTo(acknowledgement.roomName);
-            }
-        });
-    };
-
-    useEffect(process.env.REACT_APP_GAMEDEV ? startRoom : () => {}, []);
-
     return (
-        <Container className="py-5">
-            <h1>Olympus Backgammon</h1>
-            <p className="py-3">
-                In Greece, there are three major variants of Backgammon: Portes, Plakoto, and Fevga.
-                When played together, they are called Tavli. Welcome to the ancient game, the Greek
-                way.
-            </p>
+        <Container>
+            <StartForm />
             <div>
-                <Button onClick={startRoom} color="primary" size="lg">
-                    Start a Game
-                </Button>
+                <h1>Olympus Backgammon</h1>
+                <p>
+                    In Greece, there are three major variants of Backgammon: Portes, Plakoto, and
+                    Fevga. When played together, they are called Tavli. Welcome to the ancient game,
+                    the Greek way.
+                </p>
             </div>
-
-            <hr className="my-5" />
-
-            <p className="pb-3">
-                To join a game that your friend started, click the link they sent you or enter the
-                code below:
-            </p>
-
-            <Form inline onSubmit={handleSubmit}>
-                <InputGroup>
-                    <Input
-                        bsSize="lg"
-                        type="text"
-                        placeholder="Ex. g2Jk3"
-                        onChange={handleChange}
-                    />
-                    <InputGroupAddon addonType="append">
-                        <Button size="lg">Join game</Button>
-                    </InputGroupAddon>
-                </InputGroup>
-            </Form>
-
-            {shouldRedirectTo === null ? null : <Redirect to={"/room/" + shouldRedirectTo} />}
         </Container>
     );
 }
