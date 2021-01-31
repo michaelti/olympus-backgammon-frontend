@@ -21,6 +21,7 @@ const Container = styled.main`
 const H1 = styled.h1`
     font-size: 2rem;
     font-weight: bold;
+    color: #745138;
 
     small {
         font-size: 0.5em;
