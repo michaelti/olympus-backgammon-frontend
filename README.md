@@ -21,9 +21,11 @@ From the homepage, the player can either join a game created by their friend by 
 
 ## How to play
 
-Both players roll a die to go first. To make a move, click on one of your checkers. The highlighted spaces show where you are able to move.
+Both players roll a die to go first. To make a move, click on one of your checkers. The highlighted spaces show where you are able to move. Checkers can be moved a number of spaces equal to the number on each dice. The object of the game is to advance your checkers all the way around the board before your opponent. To learn more, follow the links for each variant.
 
 ### Portes
+
+[How to play Portes](https://www.bkgm.com/variants/Portes.html)
 
 <p align="center">
   <img src="./resources/portes-progress.png" alt="Portes game in progress" width="738">
@@ -31,13 +33,15 @@ Both players roll a die to go first. To make a move, click on one of your checke
 
 ### Plakoto
 
+[How to play Plakoto](https://www.bkgm.com/variants/Plakoto.html)
+
 <p align="center">
   <img src="./resources/plakoto-progress.png" alt="Plakoto game in progress" width="738">
 </p>
 
 ### Fevga
 
-TBD
+[How to play Fevga](https://www.bkgm.com/variants/Fevga.html)
 
 ## Frontend repository
 
