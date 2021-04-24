@@ -44,7 +44,7 @@ Both players roll a die to go first. To make a move, click on one of your checke
 [How to play Fevga](https://www.bkgm.com/variants/Fevga.html)
 
 <p align="center">
-  <img src="https://i.imgur.com/qw0DTXl.png" alt="Fevga game in progress" width="738">
+  <img src="https://i.imgur.com/EnFuS3t.png" alt="Fevga game in progress" width="738">
 </p>
 
 ## Frontend repository
